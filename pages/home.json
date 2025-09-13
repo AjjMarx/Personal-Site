@@ -9,9 +9,9 @@
 
         "content": [
 
-        {"type": "header", "data":{
-                "text":"<a href=\"home.html\"><h1>Alexandra J. Marx</h1></a>",
-                "toggle": { 
+        {"type": "header", "data":[
+                {"type": "text", "data":"<a href=\"home.html\"><h1>Alexandra J. Marx</h1></a>"},
+                {"type": "toggle", "data":{ 
                         "location": "east",
                         "type": "language",
                         "dual": true,
@@ -19,8 +19,8 @@
                                 "<b>en</b>",
                                 "<zh>汉</zh>"
                         ]
-                }
-        }},
+                }}
+        ]},
 
         {"type": "pageStack", "data":{
                 "location": "left",
@@ -30,7 +30,7 @@
                 "order": "descending age"
         }},
 
-        {"type": "body", "content":[
+        {"type": "body", "data":[
                 {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center>\n"}},
                 {"type": "img", "data": {
                         "location" : "east",
@@ -40,7 +40,7 @@
                         "zh_hover": "我的正式的肖像（2025）"
                 }},
                 {"type":"text", "data":{"en": "I am <b>Alexandra Marx</b>. An undergraduate CS and Mathematics major at the University of Michigan in Ann Arbor.\n", "zh": "我叫<b>Alexandra Marx （马心婕）</b>，密西根大学的电脑科学和数学专业本科生在安娜堡。\n"}},
-                {"type":"center", "content":[
+                {"type":"center", "data":[
                         {"type":"icon", "data":{
                                 "name": "Github",
                                 "image": "/files/github.png",
