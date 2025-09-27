@@ -10,7 +10,7 @@
         "content": [
 
         {"type": "header", "data":[
-                {"type": "text", "data":"<a href=\"home\"><h1 class=\"bold\">Alexandra J. Marx</h1></a>"},
+                {"type": "text", "data":{"all": "<a href=\"home\"><h1 class=\"bold\">Alexandra J. Marx</h1></a>"}},
                 {"type": "toggle", "data":{ 
                         "location": "east",
                         "type": "language",
@@ -31,10 +31,10 @@
         }},
 
         {"type": "body", "data":[
-                {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center>\n"}},
+                {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center><span class=\n"}},
                 {"type": "img", "data": {
-                        "location" : "east",
-                        "file": "/files/portrait.jpg",
+                        "location" : "right",
+                        "file": "/media/cat.jpeg",
                         "width": 0.5,
                         "en_hover": "My Professional Portrait (2025)",
                         "zh_hover": "我的正式的肖像（2025）"
@@ -51,7 +51,10 @@
                                 "image": "/files/LinkedIn.png",
                                 "link": "https://www.linkedin.com/in/alexandra-marx-85622a242/"
                         }}
-                ]}
+                ]},
+		{"type":"footer", "data":[
+			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
+		]}	
         ]}
         ]
 }

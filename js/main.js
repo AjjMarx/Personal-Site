@@ -109,10 +109,29 @@ function body(container, data) {
         body.style.right = "0px";
         body.style.top = "80px";
         body.style.bottom = "0px";
+	let footer_allow = true
         for (const item of data) {
-                //console.log(key);
- //               renderFunctions[item["type"]](container, item["data"]);
+                console.log(item);
+		if (item["type"] == "footer" && footer_allow) { 
+			body.style.bottom = "42px";
+			const footer = document.createElement("div");
+			container.appendChild(footer);
+			footer.style.position = "absolute";
+			footer.style.width = "calc(75% - 32px)";
+			footer.style.right = "10px";
+			footer.style.bottom = "8px";
+			footer.style.height = "28px";
+			
+			footer_allow = false;
+
+			for (const footer_item of item["data"]) {
+                		renderFunctions[footer_item["type"]](footer, footer_item["data"]);
+			}
+		} else {
+                	renderFunctions[item["type"]](body, item["data"]);
+		}
         }       
+	body.content.style.padding = "40px";
 	body.reload();
         console.log("done rendering body");
 }
@@ -121,25 +140,48 @@ function text(container, data) {
         console.log("creating text..");
         const text = document.createElement("div");
         container.appendChild(text);
-        text.innerHTML = data;
+	if (data["all"] != undefined) {
+		text.innerHTML = data["all"];
+	} else if (data["en"] != undefined) {
+        	text.innerHTML = data["en"];
+	} else if (data["zh"] != undefined) {
+		text.innerHTML = data["zh"];
+	}
         return text;
 }
 
 function center(container, data) {
         console.log("centering..");
-        console.log("done centering");
+	const body = document.createElement("div");
+	body.style.textAlign = "center";
+	for (const item of data) {
+		renderFunctions[item["type"]](body, item["data"]);
+	}
 }
 
 function icon(container, data) {
-        console.log("creating icon..");
+        console.log("creating icon.. unsupported");
 }
 
 function img(container, data) {
         console.log("creating image..");
+	const img = document.createElement("img");
+	img.src = data["file"];
+	img.title = data["en_hover"];
+	img.alt = data["en_hover"];
+	img.style.height = '30%';
+	//img.style.objectFit = "cover";
+	img.style.borderRadius = "12px";
+	container.appendChild(img);
 }
 
 function toggle(container, data) {
         console.log("creating toggle..");
+	
+}
+
+function footer(container, data) {
+        console.log("creating footer.. unsupported");
 }
 
 const renderFunctions = {
@@ -150,7 +192,8 @@ const renderFunctions = {
         center,
         icon,
         img,
-        toggle
+        toggle,
+	footer
 }
 
 
@@ -165,13 +208,13 @@ class SpecialDiv extends HTMLDivElement {
 		this.content.style.height = "calc(100% - 16px)";
 		this.content.style.top = "8px";
 		this.content.style.right = "8px";
-		this.content.style.backgroundColor = 'red';
 		
 		this.frame = document.createElement("div");
 		this.appendChild(this.frame);
 		this.frame.style.position = "absolute";
 		this.frame.style.width = "100%";
 		this.frame.style.height = "100%";
+		this.frame.style.pointerEvents = "none";
 
 		this.parentAppend = this.appendChild.bind(this);
         	this.appendChild = function(child) {
@@ -186,7 +229,7 @@ class SpecialDiv extends HTMLDivElement {
  
 
 	reload() {
-		this.#render_box(this.clientWidth, this.clientHeight, 9, 3, 150);
+		this.#render_box(this.clientWidth, this.clientHeight, 12, 3, 150);
 	}	
 
 	#box_svg(width, height, offst, weight, left, top, color) { 	
