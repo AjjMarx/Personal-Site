@@ -1,5 +1,10 @@
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
+	//app.style.display = "flex";
+	//app.style.flexDirection = "row";
+	//app.style.flexWrap = "wrap";
+	//app.style.justifyContent = "center";
+	//app.style.alignItems = "center";
 
         //try {
                 const res = await fetch(findPageFileName(window.location.pathname));
@@ -61,14 +66,16 @@ function header(container, data) {
         const header = document.createElement("div", { is: "special-div" });
         container.appendChild(header);
         header.style.position = "relative";
-        header.style.left = "-4px";
-        header.style.right = "-4px"
-        header.style.top = "-4px";
-        header.style.height = "75px";
+        header.style.top = "8px";
+	header.style.width = "396px";
+        header.style.height = "3.5em";
+	header.style.left = "calc(50% - 196px)"
+
+	header.content.style.top = "8px";
+	header.content.style.padding = "0px 0px 0px 0px";
 
         let textDiv;
         for (const item of data) {
-                //console.log(key);
                 if (item["type"] == "text") { 
                         textDiv = renderFunctions[item["type"]](header, item["data"]);
                 } else {
@@ -76,21 +83,8 @@ function header(container, data) {
                 }
         }
 
-        if (textDiv) {
-                textDiv.style.position = "absolute";
-                textDiv.style.height = "50%";
-                textDiv.style.width = "75%";
-                textDiv.style.top = "25%";
-                textDiv.style.left = "12.5%";
-                textDiv.style.textAlign = "center";
-                textDiv.style.verticalAlign= "middle";
-                textDiv.style.lineHeight =  "32px";
-//                textDiv.style.background = "linear-gradient(in oklch longer hue, oklch(0.7 0.1011 230.69), oklch(0.8325 0.1406 96.22))"
-//                textDiv.style.webkitBackgroundClip = "text";
-//                textDiv.style.backgroundClip = "text";
-//                textDiv.style.webkitTextFillColor = "transparent";
-        }
 
+	
 	header.reload();
 
         console.log("Header complete");
@@ -102,26 +96,32 @@ function pageStack(container, data) {
 	const box = document.createElement("div", { is: "special-div" });   
 	container.appendChild(box);
 	box.style.position = "absolute";
-	let wideWidth = "calc(25% - 4px)"
+	let wideWidth = "298px";
+	let wideLeft = "calc((100% - 1000px) / 2)";
 	let narrowWidth = "0px";
-	if (parseInt(container.offsetWidth, 10) >= 700) {
+	let narrowLeft = "-20px";
+	if (parseInt(container.offsetWidth, 10) >= 1000) {
 		box.style.width = wideWidth;
+		box.style.left = wideLeft;
 	} else {
 		box.style.width = narrowWidth;
+		box.style.left = narrowLeft;
 	}
-	box.style.left = "0px";
-	box.style.top = "80px"; 
-	box.style.bottom = "0px";
+	box.style.padding = "4px 4px 4px 4px";
+	box.style.top = "4em"; 
+	box.style.bottom = "8px";
 	box.reload();
 
 		
 
 	window.addEventListener("resize", () => {
-		if (parseInt(container.offsetWidth, 10) >= 700) {
+		if (parseInt(container.offsetWidth, 10) >= 1000) {
 			box.style.width = wideWidth;
+			box.style.left = wideLeft;
 			box.reload();
 		} else {
 			box.style.width = narrowWidth;
+			box.style.left = narrowLeft;
 			box.reload(); 
 		}
 	});
@@ -130,18 +130,23 @@ function pageStack(container, data) {
 function body(container, data) {
         console.log("creating body..");
         const body = document.createElement("div", { is: "special-div" });   
-        container.appendChild(body);
+	container.appendChild(body);
         body.style.position = "absolute";
-	let wideWidth = "calc(75% - 4px)";
-	let narrowWidth = "calc(100%)";
-	if (parseInt(container.offsetWidth, 10) > 700) {
+	let wideWidth = "700px";
+	let wideLeft = "calc((100% - 1000px) / 2 + 302px)";
+	let narrowWidth = "calc(100% - 8px)";
+	let narrowLeft = "0px";
+	if (parseInt(container.offsetWidth, 10) > 1000) {
 		body.style.width = wideWidth;
+		body.style.left = wideLeft; 
 	} else {
 		body.style.width = narrowWidth;
+		body.style.left = narrowLeft;
 	}
-        body.style.right = "0px";
-        body.style.top = "80px";
+	body.style.padding = "4px 4px 4px 4px";
+        body.style.top = "4em";
         body.style.bottom = "0px";
+	body.style.minWidth = "calc(100vh * (0.5) - 8px)";
 	let footer_allow = true
 	body.reload();
         for (const item of data) {
@@ -152,22 +157,26 @@ function body(container, data) {
 			const footer = document.createElement("div");
 			container.appendChild(footer);
 			footer.style.position = "absolute";
-			if (parseInt(container.offsetWidth, 10) >= 700) {
+			if (parseInt(container.offsetWidth, 10) >= 1000) {
 				footer.style.width = wideWidth;
+				footer.style.left = wideLeft; 
 			} else {
 				footer.style.width = narrowWidth;
+				footer.style.left = narrowLeft;
 			}
-			footer.style.right = "10px";
+			//footer.style.right = "10px";
 			footer.style.bottom = "8px";
-			footer.style.height = "28px";
+			footer.style.height = "1.5em";
 			
 			footer_allow = false;
 
 			window.addEventListener("resize", () => {
-				if (parseInt(container.offsetWidth, 10) >= 700) {
+				if (parseInt(container.offsetWidth, 10) >= 1000) {
 					footer.style.width = wideWidth;
+					footer.style.left = wideLeft; 
 				} else {
 					footer.style.width = narrowWidth; 
+					footer.style.left = narrowLeft;
 				}
 			});	
 
@@ -179,11 +188,13 @@ function body(container, data) {
 		}
         }       
         window.addEventListener("resize", () => {
-		if (parseInt(container.offsetWidth, 10) >= 700) {
+		if (parseInt(container.offsetWidth, 10) >= 1000) {
 			body.style.width = wideWidth;
+			body.style.left = wideLeft;
 			body.reload();
 		} else {
 			body.style.width = narrowWidth;
+			body.style.left = narrowLeft;
 			body.reload(); 
 		}
 	});
@@ -207,7 +218,11 @@ function text(container, data) {
 function center(container, data) {
         console.log("centering..");
 	const body = document.createElement("div");
-	body.style.textAlign = "center";
+	//body.style.textAlign = "center";
+	body.style.display = "inline-block";
+	body.style.width = "100%";
+	body.style.height = "100%";	
+	container.appendChild(body);
 	for (const item of data) {
 		renderFunctions[item["type"]](body, item["data"]);
 	}
@@ -232,7 +247,7 @@ function img(container, data) {
 	container.appendChild(img);
 
 	window.addEventListener("resize", () => {
-		if (parseInt(container.offsetWidth, 10) > 700) {
+		if (parseInt(container.offsetWidth, 10) > 600) {
 			img.style.float = "left";
 			img.style.margin = "1em 1em 1em 1em";
 		} else {	
@@ -274,8 +289,9 @@ class SpecialDiv extends HTMLDivElement {
 		this.content.style.position = "absolute";
 		this.content.style.width = "calc(100% - 16px)";
 		this.content.style.height = "calc(100% - 16px)";
-		this.content.style.top = "8px";
-		this.content.style.right = "8px";
+		this.content.style.top = "12px";
+		this.content.style.left = "12px";
+//		this.content.style.right = "8px";
 		this.content.style.padding = "10px 10% 10px 10%";
 		this.content.style.overflow = "auto";
 		this.content.style.textAlign = "justify";
@@ -296,11 +312,13 @@ class SpecialDiv extends HTMLDivElement {
 		window.addEventListener("resize", () => this.reload());
 	}
 
-
+	#scroll() {
+		return this.content.scrollTop;
+	}
  
 
 	reload() {
-		this.#render_box(this.clientWidth, this.clientHeight, 12, 3, 150);
+		this.#render_box(this.clientWidth, this.clientHeight, 24, 3, 150);
 	}	
 
 	#box_svg(width, height, offst, weight, left, top, color) { 	
