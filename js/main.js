@@ -25,7 +25,7 @@ function renderPage(container, data) {
 //        const test = document.createElement("div");
 //        test.innerHTML = findPageFileName(window.location.pathname);
 //        container.appendChild(test);	
-	customElements.define('special-div', SpecialDiv, { extends: 'div' });
+	customElements.define('special-div', SpecialDiv);
 
 	
         for (const key of Object.keys(data)) {
@@ -63,28 +63,23 @@ function findPageFileName(name) {
 
 function header(container, data) {
         console.log("creating header..");
-        const header = document.createElement("div", { is: "special-div" });
+        const header = document.createElement("special-div");
         container.appendChild(header);
-        header.style.position = "relative";
+        header.style.position = "absolute";
         header.style.top = "8px";
 	header.style.width = "396px";
         header.style.height = "3.5em";
+	header.content.style.height = "100%";
+	header.content.style.overflow = "hidden";
 	header.style.left = "calc(50% - 196px)"
+	header.content.style.padding = "0px 0px 0px 0x";	
+	header.style.padding = "0px 0px 0px 0x";	
 
-	header.content.style.top = "8px";
-	header.content.style.padding = "0px 0px 0px 0px";
+	header.content.style.display = "flex";
+	header.content.style.justifyContent = "center";
+	header.content.style.alignItems = "center";
+	header.content.innerHTML += data.find(item => item["type"] == "text")["data"]["all"];
 
-        let textDiv;
-        for (const item of data) {
-                if (item["type"] == "text") { 
-                        textDiv = renderFunctions[item["type"]](header, item["data"]);
-                } else {
-//                        renderFunctions[item["type"]](header, item["data"]);
-                }
-        }
-
-
-	
 	header.reload();
 
         console.log("Header complete");
@@ -93,7 +88,7 @@ function header(container, data) {
 
 function pageStack(container, data) {
         console.log("creating pageStack..");
-	const box = document.createElement("div", { is: "special-div" });   
+	const box = document.createElement("special-div");   
 	container.appendChild(box);
 	box.style.position = "absolute";
 	let wideWidth = "298px";
@@ -129,10 +124,10 @@ function pageStack(container, data) {
 
 function body(container, data) {
         console.log("creating body..");
-        const body = document.createElement("div", { is: "special-div" });   
+        const body = document.createElement("special-div");   
 	container.appendChild(body);
         body.style.position = "absolute";
-	let wideWidth = "700px";
+	let wideWidth = "692px";
 	let wideLeft = "calc((100% - 1000px) / 2 + 302px)";
 	let narrowWidth = "calc(100% - 8px)";
 	let narrowLeft = "0px";
@@ -220,8 +215,8 @@ function center(container, data) {
 	const body = document.createElement("div");
 	//body.style.textAlign = "center";
 	body.style.display = "inline-block";
-	body.style.width = "100%";
-	body.style.height = "100%";	
+	//body.style.width = "100%";
+	//body.style.height = "100%";	
 	container.appendChild(body);
 	for (const item of data) {
 		renderFunctions[item["type"]](body, item["data"]);
@@ -239,20 +234,26 @@ function img(container, data) {
 	img.title = data["en_hover"];
 	img.alt = data["en_hover"];
 	img.style.display = "block";
-	img.style.float = "left";
-	img.style.margin = "1em 1em 1em 1em";
-	img.style.height = '30%';
+	img.style.width = Math.min(container.offsetWidth * 0.8 * data["width"], 560) + "px";
+	if (0.8 * container.offsetWidth * 0.8 - container.offsetWidth * 0.8 * data["width"] < 150 || data["location"] == "center") {
+		img.style.float = "none";
+		img.style.margin = "1em auto";
+	} else {	
+		img.style.float = data["location"];
+		img.style.margin = "1em 1em 1em 1em";
+	}
 	//img.style.objectFit = "cover";
 	img.style.borderRadius = "12px";
 	container.appendChild(img);
 
 	window.addEventListener("resize", () => {
-		if (parseInt(container.offsetWidth, 10) > 600) {
-			img.style.float = "left";
-			img.style.margin = "1em 1em 1em 1em";
-		} else {	
+		img.style.width = container.offsetWidth * 0.8 * data["width"] + "px";
+		if (0.8 * container.offsetWidth * 0.8 - container.offsetWidth * 0.8 * data["width"] < 150 || data["location"] == "center") {
 			img.style.float = "none";
 			img.style.margin = "1em auto";
+		} else {	
+			img.style.float = data["location"];
+			img.style.margin = "1em 1em 1em 1em";
 		}
 	});
 }
@@ -279,11 +280,17 @@ const renderFunctions = {
 }
 
 
-class SpecialDiv extends HTMLDivElement {
+class SpecialDiv extends HTMLElement {
 	constructor() {
 		super();
 		//this.style.padding = "4px";
 
+		this.content = null;
+		this.frame = null;
+			
+	}
+
+	connectedCallback() {
 		this.content = document.createElement("div");
 		this.appendChild(this.content);
 		this.content.style.position = "absolute";
@@ -304,9 +311,9 @@ class SpecialDiv extends HTMLDivElement {
 		this.frame.style.pointerEvents = "none";
 
 		this.parentAppend = this.appendChild.bind(this);
-        	this.appendChild = function(child) {
-			this.content.appendChild(child);
-		}	
+        	this.appendChild = (child) => {
+			return this.content.appendChild(child);
+		};
 
 		this.reload();
 		window.addEventListener("resize", () => this.reload());
