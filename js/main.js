@@ -1,11 +1,5 @@
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
-	//app.style.display = "flex";
-	//app.style.flexDirection = "row";
-	//app.style.flexWrap = "wrap";
-	//app.style.justifyContent = "center";
-	//app.style.alignItems = "center";
-
         //try {
                 const res = await fetch(findPageFileName(window.location.pathname));
                 const data = await res.json();
@@ -63,24 +57,37 @@ function findPageFileName(name) {
 
 function header(container, data) {
         console.log("creating header..");
-        const header = document.createElement("special-div");
+	const header = document.createElement("div");
+        const title = document.createElement("special-div");
         container.appendChild(header);
-        header.style.position = "absolute";
-        header.style.top = "8px";
-	header.style.width = "396px";
-        header.style.height = "3.5em";
-	header.content.style.height = "100%";
-	header.content.style.overflow = "hidden";
-	header.style.left = "calc(50% - 196px)"
-	header.content.style.padding = "0px 0px 0px 0x";	
-	header.style.padding = "0px 0px 0px 0x";	
+	header.style.position = "absolute";
+	header.style.top = "0px";
+	header.style.left = "0px";
+	header.style.width = "100%";
+	header.style.height = "4em";
+	header.style.minWidth = "calc(100vh * (0.5))";
 
-	header.content.style.display = "flex";
-	header.content.style.justifyContent = "center";
-	header.content.style.alignItems = "center";
-	header.content.innerHTML += data.find(item => item["type"] == "text")["data"]["all"];
+	header.innerHTML = '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + '<line x1="0px" y1="calc(50% - 1.5px)" x2="100%" y2="calc(50% - 1.5px)" stroke="oklch(0.75 0.225 240)" stroke-width="3px"/>' + '<line x1="0px" y1="calc(50% + 1.5px)" x2="100%" y2="calc(50% + 1.5px)" stroke="oklch(0.75 0.225 60)" stroke-width="3px"/>' + '<line x1="0px" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="3px"/>' + '</svg>'; 
 
-	header.reload();
+	header.appendChild(title);
+        title.style.position = "absolute";
+        title.style.top = "8px";
+	title.style.width = "396px";
+        title.style.height = "3.5em";
+	title.content.style.height = "100%";
+	title.content.style.overflow = "hidden";
+	title.style.left = "calc(50% - 196px)"
+	title.content.style.padding = "0px 0px 0px 0x";	
+	title.style.padding = "0px 0px 0px 0x";	
+
+	//title.content.style.display = "flex";
+	title.content.style.height = "3em";
+	title.content.style.top = "-4px";
+	//title.content.style.justifyContent = "center";
+	//title.content.style.alignItems = "center";
+	title.content.innerHTML += data.find(item => item["type"] == "text")["data"]["all"];
+
+	title.reload();
 
         console.log("Header complete");
         return header;
@@ -88,36 +95,52 @@ function header(container, data) {
 
 function pageStack(container, data) {
         console.log("creating pageStack..");
-	const box = document.createElement("special-div");   
+	const box = document.createElement("div");   
 	container.appendChild(box);
 	box.style.position = "absolute";
-	let wideWidth = "298px";
+	let wideWidth = 302;
 	let wideLeft = "calc((100% - 1000px) / 2)";
-	let narrowWidth = "0px";
-	let narrowLeft = "-20px";
+	box.style.width = (wideWidth ) + "px";
+	box.style.left = wideLeft;
 	if (parseInt(container.offsetWidth, 10) >= 1000) {
-		box.style.width = wideWidth;
-		box.style.left = wideLeft;
+		box.style.display = "block";
 	} else {
-		box.style.width = narrowWidth;
-		box.style.left = narrowLeft;
+		box.style.display = "none";
 	}
 	box.style.padding = "4px 4px 4px 4px";
-	box.style.top = "4em"; 
+	box.style.top = "calc(2em + 3px)"; 
 	box.style.bottom = "8px";
-	box.reload();
+	box.style.backgroundColor = "yellow";
+	box.style.overflow = "auto";	
+	//box.reload();
 
-		
+	let tp = 33;
+
+	for (let i = 0; i < 10; i++) {
+		const pg = document.createElement("special-div");
+		//pg.style.backgroundColor = "blue";
+		pg.style.position = "absolute";
+		pg.style.width = wideWidth + "px";
+		pg.style.left = "0px";
+		pg.style.height = "6em";
+		pg.style.top = tp + "px";
+		tp = tp + 100;
+		//pg.style.padding = "4px 4px 4px 4px";
+		//pg.reload();
+		box.appendChild(pg);
+	}	
 
 	window.addEventListener("resize", () => {
 		if (parseInt(container.offsetWidth, 10) >= 1000) {
-			box.style.width = wideWidth;
-			box.style.left = wideLeft;
-			box.reload();
-		} else {
-			box.style.width = narrowWidth;
-			box.style.left = narrowLeft;
-			box.reload(); 
+			//box.style.width = (wideWidth) + "px";
+			//box.style.left = wideLeft;
+			box.style.display = "block";
+	//		box.reload();
+		} else if (parseInt(container.offsetWidth, 10) < 1000) {
+			//box.style.width = narrowWidth;
+			//box.style.left = narrowLeft;
+			box.style.display = "none";
+	//		box.reload(); 
 		}
 	});
 }
@@ -159,7 +182,6 @@ function body(container, data) {
 				footer.style.width = narrowWidth;
 				footer.style.left = narrowLeft;
 			}
-			//footer.style.right = "10px";
 			footer.style.bottom = "8px";
 			footer.style.height = "1.5em";
 			
@@ -242,7 +264,6 @@ function img(container, data) {
 		img.style.float = data["location"];
 		img.style.margin = "1em 1em 1em 1em";
 	}
-	//img.style.objectFit = "cover";
 	img.style.borderRadius = "12px";
 	container.appendChild(img);
 
@@ -294,14 +315,15 @@ class SpecialDiv extends HTMLElement {
 		this.content = document.createElement("div");
 		this.appendChild(this.content);
 		this.content.style.position = "absolute";
-		this.content.style.width = "calc(100% - 16px)";
-		this.content.style.height = "calc(100% - 16px)";
-		this.content.style.top = "12px";
-		this.content.style.left = "12px";
+		this.content.style.width = "calc(100% - 6px)";
+		this.content.style.height = "calc(100% - 8px)";
+		this.content.style.top = "8px";
+		this.content.style.left = "4px";//"12px";
 //		this.content.style.right = "8px";
 		this.content.style.padding = "10px 10% 10px 10%";
 		this.content.style.overflow = "auto";
 		this.content.style.textAlign = "justify";
+		this.content.style.backgroundColor = "white";
 		
 		this.frame = document.createElement("div");
 		this.appendChild(this.frame);
@@ -325,6 +347,7 @@ class SpecialDiv extends HTMLElement {
  
 
 	reload() {
+		//console.log(this.clientWidth, this.clientHeight);
 		this.#render_box(this.clientWidth, this.clientHeight, 24, 3, 150);
 	}	
 
