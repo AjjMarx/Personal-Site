@@ -73,3 +73,15 @@ section, header, footer, nav, article, div {
         display: block;
 }
 
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body, html {
+  scrollbar-width: none; /* For Firefox */
+}
+
+html, body {
+  overflow: hidden;
+}
