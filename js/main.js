@@ -1,7 +1,10 @@
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
-        //try {
-                const res = await fetch(findPageFileName(window.location.pathname));
+	customElements.define('special-div', SpecialDiv);
+	const filePath = findPageFileName(window.location.hash.slice(1));
+        //console.log(findPageFileName(window.location.hash.slice(1)));
+	//try {
+                const res = await fetch(filePath);
                 const data = await res.json();
 
                 renderPage(app, data);
@@ -13,40 +16,15 @@ window.addEventListener("DOMContentLoaded", async () => {
        // }
 });
 
-horizontalElements = 0
-
-function renderPage(container, data) {
-//        const test = document.createElement("div");
-//        test.innerHTML = findPageFileName(window.location.pathname);
-//        container.appendChild(test);	
-	customElements.define('special-div', SpecialDiv);
-
-	
-        for (const key of Object.keys(data)) {
-                console.log(key);
-        }
-
-        for (const key of Object.keys(data.meta)) {
-                console.log(key, data.meta[key]);
-        }
-
-	for (const item of data.content) {
-		if(item["type"] == "header" || item["type"] == "pageStack") {
-			horizontalElements++;	
-		}
-	}
-	console.log(horizontalElements);
-
-        for (const item of data.content) {
-                //console.log(item);
-                //for (const key of Object.keys(item)) {
-                //        console.log(key, item[key]);
-                //}
-                renderFunctions[item["type"]](container, item["data"]);
-        }
-
-
-}
+window.addEventListener("hashchange", async() => {
+	const path = window.location.hash.slice(1) || '/';
+	const app = document.getElementById("app");
+	const res = await fetch(findPageFileName(path));
+	const data = await res.json();
+	//console.log(typeof(app.innerHTML));
+	//app.innerHTML = "";
+	updatePage(app, data);
+});
 
 function findPageFileName(name) {
         if(name == "/") {
@@ -55,11 +33,97 @@ function findPageFileName(name) {
         return "pages" + name + ".json";
 }
 
-function header(container, data) {
-        console.log("creating header..");
+horizontalElements = 0
+
+function renderPage(container, data) {
+//        const test = document.createElement("div");
+//        test.innerHTML = findPageFileName(window.location.pathname);
+//        container.appendChild(test);	
+	console.log(findPageFileName(window.location.hash.slice(1)));
+	
+        for (const key of Object.keys(data)) {
+                //console.log(key);
+        }
+
+        for (const key of Object.keys(data.meta)) {
+                //console.log(key, data.meta[key]);
+        }
+
+	for (const item of data.content) {
+		if(item["type"] == "header" || item["type"] == "pageStack") {
+			horizontalElements++;	
+		}
+	}
+	//console.log(horizontalElements);
+
+        for (const item of data.content) {
+                //console.log(item);
+                //for (const key of Object.keys(item)) {
+                //        console.log(key, item[key]);
+                //}
+		const id = item.id ?? 0;
+                renderFunctions[item["type"]](container, item["data"], parseInt(id,16));
+        }
+
+	//console.log(window.location.pathname);
+}
+
+function updatePage(container, data) { //for swapping out JSONs, not general updates, just use DOM for that
+//Start by matching up trees by ID, 
+//Matching nodes get transition animations
+//Fade out originals with no match
+//Fade in any new elements with no match
+	//console.log(container);
+	const specialDivs = Array.from(container.getElementsByTagName('special-div'));
+	divs = specialDivs.concat(Array.from(container.getElementsByTagName('div')));
+	console.log("Locating live elements in container that have valid IDs");
+	let oldHTML = [];
+	for (const elm of divs) {
+		if (elm.id && elm.id != "0" && elm.id != 0) { //console.log(parseInt(elm.id).toString(16)); }
+			oldHTML.push(parseInt(elm.id));
+		}
+	}
+	console.log(oldHTML);
+	console.log("Locating elements in " + findPageFileName(window.location.hash.slice(1)) + " with valid IDs");
+	
+	let newJSON = [];
+	JSONrecurse(data, newJSON);
+	console.log(newJSON);
+
+	//Given how small these arrays are it makes most sense to just do a number of linear searches
+	console.log("Shared elements:");
+	let intersection = [];
+	for (const HTMLnum of oldHTML) {
+		for(const JSONnum of newJSON) {
+			if (HTMLnum == JSONnum) {
+				intersection.push(HTMLnum);
+				//oldHTML.splice(oldHTML.indexOf(HTMLnum), 1);
+				//newJSON.splice(newJSON.indexOf(JSONnum), 1);
+				break;
+			}
+		} 
+	}
+	console.log(intersection);
+}
+
+function JSONrecurse(data, arr) {
+	if (!data) return arr;
+	if (data.id && data.id != "0" && data.id != 0) { arr.push(parseInt(data.id,16)); }
+	if (Array.isArray(data.content)){
+		data.content.forEach(child => JSONrecurse(child, arr));
+	}
+	if (Array.isArray(data.data)){
+		data.data.forEach(child => JSONrecurse(child, arr));
+	}
+	return arr
+}
+
+function header(container, data, name) {
+        //console.log("creating header..");
 	const header = document.createElement("div");
         const title = document.createElement("special-div");
-        container.appendChild(header);
+        header.id = name;
+	container.appendChild(header);
 	header.style.position = "absolute";
 	header.style.top = "0px";
 	header.style.left = "0px";
@@ -70,6 +134,7 @@ function header(container, data) {
 	header.innerHTML = '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + '<line x1="0px" y1="calc(50% - 1.5px)" x2="100%" y2="calc(50% - 1.5px)" stroke="oklch(0.75 0.225 240)" stroke-width="3px"/>' + '<line x1="0px" y1="calc(50% + 1.5px)" x2="100%" y2="calc(50% + 1.5px)" stroke="oklch(0.75 0.225 60)" stroke-width="3px"/>' + '<line x1="0px" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="3px"/>' + '</svg>'; 
 
 	header.appendChild(title);
+	title.id = 0;
         title.style.position = "absolute";
         title.style.top = "8px";
 	title.style.width = "396px";
@@ -89,13 +154,14 @@ function header(container, data) {
 
 	title.reload();
 
-        console.log("Header complete");
+        //console.log("Header complete");
         return header;
 }
 
-function pageStack(container, data) {
-        console.log("creating pageStack..");
-	const box = document.createElement("div");   
+function pageStack(container, data, name) {
+        //console.log("creating pageStack..");
+	const box = document.createElement("div");
+	box.id = name;   
 	container.appendChild(box);
 	box.style.position = "absolute";
 	let wideWidth = 302;
@@ -109,7 +175,7 @@ function pageStack(container, data) {
 	}
 	box.style.padding = "4px 4px 4px 4px";
 	box.style.top = "calc(2em + 3px)"; 
-	box.style.bottom = "8px";
+	box.style.bottom = "0px";
 	//box.style.backgroundColor = "yellow";
 	box.style.overflow = "auto";	
 	//box.reload();
@@ -120,6 +186,7 @@ function pageStack(container, data) {
 	for (let i = 0; i < 10; i++) {
 		const pg = document.createElement("special-div");
 		//pg.style.backgroundColor = "blue";
+		pg.id = 0;
 		pg.style.position = "absolute";
 		pg.style.width = (wideWidth - 14) + "px";
 		pg.style.left = "14px";
@@ -146,9 +213,10 @@ function pageStack(container, data) {
 	});
 }
 
-function body(container, data) {
-        console.log("creating body..");
-        const body = document.createElement("special-div");   
+function body(container, data, name) {
+        //console.log("creating body..");
+        const body = document.createElement("special-div");
+	body.id = name;   
 	container.appendChild(body);
         body.style.position = "absolute";
 	let wideWidth = "692px";
@@ -164,16 +232,17 @@ function body(container, data) {
 	}
 	body.style.padding = "4px 4px 4px 4px";
         body.style.top = "4em";
-        body.style.bottom = "0px";
+        body.style.bottom = "10px";
 	body.style.minWidth = "calc(100vh * (0.5) - 8px)";
 	let footer_allow = true
 	body.reload();
         for (const item of data) {
-                console.log(item);
+                //console.log(item);
 		if (item["type"] == "footer" && footer_allow) { 
 			body.style.bottom = "42px";
 			body.reload();
 			const footer = document.createElement("div");
+			if (item.id) { footer.id = parseInt(item.id,16); } else { footer.id = 0; }
 			container.appendChild(footer);
 			footer.style.position = "absolute";
 			if (parseInt(container.offsetWidth, 10) >= 1000) {
@@ -199,10 +268,12 @@ function body(container, data) {
 			});	
 
 			for (const footer_item of item["data"]) {
-                		renderFunctions[footer_item["type"]](footer, footer_item["data"]);
+				const id = footer_item.id ?? 0;
+                		renderFunctions[footer_item["type"]](footer, footer_item["data"], parseInt(id,16));	
 			}
 		} else {
-                	renderFunctions[item["type"]](body, item["data"]);
+			const id = item.id ?? 0;
+			renderFunctions[item["type"]](body, item["data"], parseInt(id,16));  
 		}
         }       
         window.addEventListener("resize", () => {
@@ -216,13 +287,14 @@ function body(container, data) {
 			body.reload(); 
 		}
 	});
-	console.log("done rendering body");
+	//console.log("done rendering body");
 }
 
-function text(container, data) {
-        console.log("creating text..");
+function text(container, data, name) {
+        //console.log("creating text..");
         const text = document.createElement("div");
         container.appendChild(text);
+	text.id = name;
 	if (data["all"] != undefined) {
 		text.innerHTML = data["all"];
 	} else if (data["en"] != undefined) {
@@ -233,26 +305,29 @@ function text(container, data) {
         return text;
 }
 
-function center(container, data) {
-        console.log("centering..");
+function center(container, data, name) {
+        //console.log("centering..");
 	const body = document.createElement("div");
+	body.id = name;
 	//body.style.textAlign = "center";
 	body.style.display = "inline-block";
 	//body.style.width = "100%";
 	//body.style.height = "100%";	
 	container.appendChild(body);
 	for (const item of data) {
-		renderFunctions[item["type"]](body, item["data"]);
+		const id = item.id ?? 0;
+                renderFunctions[item["type"]](container, item["data"], parseInt(id,16));
 	}
 }
 
-function icon(container, data) {
-        console.log("creating icon.. unsupported");
+function icon(container, data, name) {
+        //console.log("creating icon.. unsupported");
 }
 
-function img(container, data) {
-        console.log("creating image..");
+function img(container, data, name) {
+        //console.log("creating image..");
 	const img = document.createElement("img");
+	img.id = name;
 	img.src = data["file"];
 	img.title = data["en_hover"];
 	img.alt = data["en_hover"];
@@ -280,13 +355,13 @@ function img(container, data) {
 	});
 }
 
-function toggle(container, data) {
-        console.log("creating toggle..");
+function toggle(container, data, name) {
+        //console.log("creating toggle..");
 	
 }
 
-function footer(container, data) {
-        console.log("creating footer.. unsupported");
+function footer(container, data, name) {
+        //console.log("creating footer.. unsupported");
 }
 
 const renderFunctions = {
@@ -314,6 +389,7 @@ class SpecialDiv extends HTMLElement {
 
 	connectedCallback() {
 		this.content = document.createElement("div");
+		this.content.id = 0;
 		this.appendChild(this.content);
 		this.content.style.position = "absolute";
 		this.content.style.width = "calc(100% - 6px)";
@@ -327,6 +403,7 @@ class SpecialDiv extends HTMLElement {
 		this.content.style.backgroundColor = "white";
 		
 		this.frame = document.createElement("div");
+		this.frame.id = 0;
 		this.appendChild(this.frame);
 		this.frame.style.position = "absolute";
 		this.frame.style.width = "100%";

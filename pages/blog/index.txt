@@ -1,0 +1,5 @@
+-TechStack.json
+-Resume.json
+-Portfolio.json
+-Reading.json
+/posts

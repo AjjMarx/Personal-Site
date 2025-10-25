@@ -10,7 +10,7 @@
 	"content": [
 
         {"type": "header", "data":[
-                {"type": "text", "data":{"all": "<a href=\"home\"><h1 class=\"bold\"><center>Alexandra J. Marx</center></h1></a>"}},
+                {"type": "text", "data":{"all": "<a href=\"#/blog/Reading\"><h1 class=\"bold\"><center>Alexandra J. Marx</center></h1></a>"}},
                 {"type": "toggle", "data":{ 
                         "location": "east",
                         "type": "language",
@@ -20,17 +20,16 @@
                                 "<zh>汉</zh>"
                         ]
                 }}
-        ]},
+        ], "id": "a82f"},
 
         {"type": "pageStack", "priority": 1, "data":{
                 "location": "left",
                 "en_title": "<h1>My Blog:</h1>",
                 "zh_title": "<h1>我的博客:</h1>",  
-                "directory": "/blog",
-                "order": "descending age"
-        }},
+                "directory": "blog"
+        }, "id": "5a11"},
 
-        {"type": "body", "priority": 0, "data":[
+        {"type": "body", "id": "72d8", "priority": 0, "data":[
                 {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center><span class=\n"}},
                 {"type": "img", "data": {
                         "location" : "center",
@@ -60,7 +59,7 @@
                                 "link": "https://www.linkedin.com/in/alexandra-marx-85622a242/"
                         }}
                 ]},
-		{"type":"footer", "data":[
+		{"type":"footer", "id": "db62", "data":[
 			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
 		]}	
         ]}

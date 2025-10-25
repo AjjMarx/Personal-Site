@@ -1,0 +1,104 @@
+Use these` random 16 bit hashes to create seemless transition achors 
+between elements/divs of any page json file
+These are a list of all of them.
+0000 - Nil
+a82f - Sitewide Header 
+5a11 - Sitewide Page stack
+72d8 - Main Body
+db62 - Main Footer
+5439 - English Chinese Toggle Switch
+734d - Second Body
+1311 - Second Header
+cefe - Title Element
+fc74 - Table of contents
+64ed - Bibliography
+ec35 
+a1f9 
+08bc 
+874c 
+e01d 
+a223 
+9856 
+6c44 
+2f5e 
+91db 
+6f9b 
+2418 
+382c 
+d209 
+17c4 
+c4a1 
+edaf 
+4602 
+cf9f 
+b514 
+7b9b 
+d22b 
+d671 
+196a 
+718b 
+dfbb 
+35b8 
+9264 
+4df2 
+1046 
+e51e 
+1696 
+74d1 
+7dee 
+e778 
+a140 
+7e66 
+8c75 
+8176 
+6d5a 
+72a8 
+d499 
+6e9f 
+031b 
+7da8 
+fc80 
+1829 
+28fc 
+221d 
+c69a 
+9053 
+0e4d 
+2b0c 
+2039 
+b433 
+0a64 
+1c4f 
+c703 
+a26e 
+8445 
+7191 
+6371 
+4faf 
+1dd0 
+34fe 
+4f76 
+4e2e 
+481b 
+0e0a 
+84f5 
+db97 
+7926 
+df5f 
+42f7 
+884b 
+992b 
+2231 
+0655 
+b38c 
+f99d 
+def3 
+ec27 
+8dea 
+3d91 
+f3a0 
+f93f 
+f9a5 
+5806 
+34f6 
+9b78 
