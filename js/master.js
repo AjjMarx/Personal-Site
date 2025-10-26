@@ -94,7 +94,7 @@ function updatePage(container, data) { //for swapping out JSONs, not general upd
 	for (const [id, type] of complement) {
 		const elem = document.getElementById(id.toString(16))
 		if (supportedFuctions[type]) {
-			console.log(type);
+			//console.log(type);
 			removalFunctions[type](elem);
 		}
 	} 

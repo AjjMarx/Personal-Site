@@ -74,9 +74,17 @@ function addBody(container, data, name) {
 	//console.log("done rendering body");
 }
 
-function removeBody(element) {
+async function removeBody(element) {
 	console.log(element);
-	if (element) { element.remove(); }
+	console.log(element.getBoundingClientRect().top);
+	let botm = parseInt(element.style.bottom, 10);
+	await interpolate(0, parseInt(element.getBoundingClientRect().height, 10), 0, 4, 500, (value) => {
+		//console.log(value);
+		element.style.bottom = (botm + value) + "px"; 
+		//console.log((botm + value) + "px");
+		element.reload();
+	});
 	console.log("body removed");
+	if (element) { element.remove(); }
 }
 
