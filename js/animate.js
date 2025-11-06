@@ -42,11 +42,11 @@ async function HTMLsnip(HTML, length) { //HTML only
 
 	while (ticker > 0 && node && node != HTML) {
 		if ((node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) && node.localName != 'img') {
-			if (node.textContent.length <= length) {
+			if (node.textContent.length <= ticker) {
 				node.remove();
 				ticker -= node.textContent.length;	
 			} else {
-				node.textContent = node.textContent.substring(0, node.textContent.length - length); 
+				node.textContent = node.textContent.substring(0, node.textContent.length - ticker); 
 				ticker = 0;	
 			}
 		} else if (true) {
@@ -59,6 +59,7 @@ async function HTMLsnip(HTML, length) { //HTML only
 		node = deepest(HTML, (nothing) => { return true; })
 		ticker--;
 	}
+	console.log(ticker);
 	//console.log(node);
 	//return null;
 }
