@@ -1,4 +1,4 @@
-function addHeader(container, data, name) {
+function addHeader(container, data, name, isAnimated) {
         //console.log("creating header..");
 	const header = document.createElement("div");
         const title = document.createElement("special-div");
@@ -42,7 +42,7 @@ function removeHeader(element) {
 	if (element) { element.remove(); }
 }
 
-async function updateHeader(element) {
+async function updateHeader(element, content) {
 	console.log("updating header");
 	return;
 }

@@ -54,11 +54,11 @@ function addBody(container, data, name) {
 				}
 			});	
 
-			generateChildren(footer, item["data"]);
+			generateChildren(footer, item["data"], false);
 		} else {
 			const id = assignName(item.id);
 			typeHash.set(parseInt(id, 16), item["type"]);
-			spawnFunctions[item["type"]](body, item["data"], id);  
+			spawnFunctions[item["type"]](body, item["data"], id, false);  
 		}
         }       
         window.addEventListener("resize", () => {
@@ -91,12 +91,12 @@ async function removeBody(element) {
 	element.remove();
 }	
 
-async function updateBody(element) {
+async function updateBody(element, newContent) {
 	console.log("updating body");
+	let body = element;
 	let content = element.content
 	let lastChild = deepest(content, (element) => { return (element && typeof element.getBoundingClientRect === "function"); });
-	console.log(lastChild);	
-	console.log((lastChild && typeof lastChild.getBoundingClientRect === "function"));
+	
 	//remove out of sight elements
 	while (parseInt(lastChild.getBoundingClientRect().top) > parseInt(element.getBoundingClientRect().height) + 50) {
 		lastChild.remove();
@@ -120,9 +120,53 @@ async function updateBody(element) {
 			i++;	
 		}
 	}
+	await interpolate(0, 1, 0, 0, 1000, update, () => {console.log("finished");});
 
-	await interpolate(0, 1, 0, 0, 500, update);
-	//HTMLsnip(content, 10);
+	//generate a copy to animate adding
+
+	console.log(newContent)
+	let footer_allow = false;
+	for (const item of newContent) {
+                //console.log(item);
+		if (item["type"] == "footer" && footer_allow) { 
+	/*		body.style.bottom = "42px";
+			body.reload();
+			const footer = document.createElement("div");
+			footer.id = assignName(item.id);
+			body.footerId = footer.id;
+			typeHash.set(parseInt(footer.id, 16), "footer");
+			container.appendChild(footer);
+			footer.style.position = "absolute";
+			if (parseInt(container.offsetWidth, 10) >= 1000) {
+				footer.style.width = wideWidth;
+				footer.style.left = wideLeft; 
+			} else {
+				footer.style.width = narrowWidth;
+				footer.style.left = narrowLeft;
+			}
+			footer.style.bottom = "8px";
+			footer.style.height = "1.5em";
+			
+			footer_allow = false;
+
+			window.addEventListener("resize", () => {
+				if (parseInt(container.offsetWidth, 10) >= 1000) {
+					footer.style.width = wideWidth;
+					footer.style.left = wideLeft; 
+				} else {
+					footer.style.width = narrowWidth; 
+					footer.style.left = narrowLeft;
+				}
+			});	
+
+			generateChildren(footer, item["data"]);*/
+		} else {
+			const id = assignName(item.id);
+			typeHash.set(parseInt(id, 16), item["type"]);
+			await spawnFunctions[item["type"]](body, item["data"], id, true);  
+		}
+        }
+	//animate adding
 
 	return;
 }

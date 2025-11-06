@@ -34,11 +34,11 @@ function findPageFileName(name) {
         return "pages" + name + ".json";
 }
 
-function generateChildren(container, content) {
+function generateChildren(container, content, isAnimated) {
 	for (const item of content) {
 		const id = assignName(item.id);
 		typeHash.set(id, item["type"]);
-		spawnFunctions[item["type"]](container, item["data"], id);
+		spawnFunctions[item["type"]](container, item["data"], id, false, isAnimated);
 	}
 }
 
@@ -77,8 +77,8 @@ function updatePage(container, data) { //for swapping out JSONs, not general upd
 	let toAdd = new Map(newJSON);
 	for (const [HTMLid, HTMLtype] of oldHTML) {
 		for(const [JSONid, JSONtype] of newJSON) {
-			if (HTMLid == JSONid && HTMLtype == JSONtype) {
-				intersection.set(HTMLid, HTMLtype);
+			if (HTMLid == JSONid && HTMLtype == JSONtype[0]) {
+				intersection.set(HTMLid, JSONtype);
 				complement.delete(HTMLid);
 				toAdd.delete(JSONid);
 				break;
@@ -111,17 +111,20 @@ function updatePage(container, data) { //for swapping out JSONs, not general upd
 	}
 
 	console.log("Updating elements..");
+	console.log(intersection);
 	for (const [id, type] of intersection) {
-		const elem = document.getElementById(id)
-		if (supportedFuctions[type]) {
-			updateFunctions[type](elem);
+		const elemId = document.getElementById(id)
+		console.log(type[0]);
+		if (supportedFuctions[type[0]]) {
+			console.log(elemId + " " + type[1]);
+			updateFunctions[type[0]](elemId, type[1]);
 		}
 	} 
 }
 
 function JSONrecurse(data, map) {
 	if (!data) return map;
-	if (data.id && data.id != "0" && data.id != 0) { map.set(parseInt(data.id, 16), data["type"]); }
+	if (data.id && data.id != "0" && data.id != 0) { map.set(parseInt(data.id, 16), [data["type"], data["data"]]); }
 	if (Array.isArray(data.content)){
 		data.content.forEach(child => JSONrecurse(child, map));
 	}

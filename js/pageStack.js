@@ -1,4 +1,4 @@
-function addPageStack(container, data, name) {
+function addPageStack(container, data, name, isAnimated) {
         //console.log("creating pageStack..");
 	const box = document.createElement("div");
 	box.id = assignName(name);   
@@ -58,7 +58,7 @@ function removePageStack(element) {
 	if (element) { element.remove(); }
 }
 
-async function updatePageStack(element) {
+async function updatePageStack(element, content) {
 	console.log("updating page stack");
 	return;
 }

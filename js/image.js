@@ -1,4 +1,4 @@
-function addImg(container, data, name) {
+async function addImg(container, data, name, isAnimated) {
         //console.log("creating image..");
 	const img = document.createElement("img");
 	img.id = assignName(name);
@@ -16,6 +16,15 @@ function addImg(container, data, name) {
 	}
 	img.style.borderRadius = "12px";
 	container.appendChild(img);
+
+	return new Promise((resolve, reject) => {
+		if (isAnimated) {
+			const wdth = parseInt(img.style.width);
+			interpolate(wdth, 0, 0, 0, 200, (value) => {
+				img.style.width = Math.floor(Math.abs(wdth-value)) + "px"; 
+			}, () => { console.log("finished"); resolve(); });
+		} else { resolve(); }
+	});
 
 	window.addEventListener("resize", () => {
 		img.style.width = container.offsetWidth * 0.8 * data["width"] + "px";
@@ -39,12 +48,12 @@ async function removeImg(index) {
 	const wdth = parseInt(element.style.width);
 	await interpolate(0, wdth, 0, 0, 50, (value) => {
 		element.style.width = Math.floor(Math.abs(wdth-value)) + "px"; 
-	});
+	}, () => {console.log("finished");});
 	element.remove();
 	statusHash.set(element.id, "removed");
 }
 
-async function updateImg(element) {
+async function updateImg(element, content) {
 	console.log("updating image");
 	return;
 }

@@ -1,4 +1,4 @@
-function addIcon(container, data, name) {
+function addIcon(container, data, name, isAnimated) {
         //console.log("creating icon.. unsupported");
 }
 

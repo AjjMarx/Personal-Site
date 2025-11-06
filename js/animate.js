@@ -1,4 +1,4 @@
-function interpolate(start, target, Aslope, Bslope, mili, onUpdate) {
+function interpolate(start, target, Aslope, Bslope, mili, onUpdate, onComplete) {
 	return new Promise((resolve) => {
 	const startTime = performance.now();
 	const st = parseInt(start);
@@ -27,6 +27,7 @@ function interpolate(start, target, Aslope, Bslope, mili, onUpdate) {
 			requestAnimationFrame(step);
 		} else {
 			await onUpdate(tg);
+			await onComplete();
 			resolve();
 		}
 	}
@@ -39,7 +40,7 @@ async function HTMLsnip(HTML, length) { //HTML only
 	let node = deepest(HTML, (nothing) => { return true; });
 	let ticker = length;
 
-	while (ticker > 0) {
+	while (ticker > 0 && node && node != HTML) {
 		if ((node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) && node.localName != 'img') {
 			if (node.textContent.length <= length) {
 				node.remove();
@@ -51,7 +52,9 @@ async function HTMLsnip(HTML, length) { //HTML only
 		} else if (true) {
 			if (node.id && supportedFuctions[node.localName]) {
 				await removalFunctions[node.localName](node.id);
-			} else { node.remove(); }
+			} else if (node != HTML) { 
+				node.remove(); 
+			}
 		} 
 		node = deepest(HTML, (nothing) => { return true; })
 		ticker--;
