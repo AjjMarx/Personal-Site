@@ -14,6 +14,7 @@ function addHeader(container, data, name, isAnimated) {
 	header.innerHTML = '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + '<line x1="0px" y1="calc(50% - 1.5px)" x2="100%" y2="calc(50% - 1.5px)" stroke="oklch(0.75 0.225 240)" stroke-width="3px"/>' + '<line x1="0px" y1="calc(50% + 1.5px)" x2="100%" y2="calc(50% + 1.5px)" stroke="oklch(0.75 0.225 60)" stroke-width="3px"/>' + '<line x1="0px" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="3px"/>' + '</svg>'; 
 
 	header.appendChild(title);
+	header.titleElement = title;
 	title.id = assignName(0);
         title.style.position = "absolute";
         title.style.top = "8px";
@@ -44,6 +45,8 @@ function removeHeader(element) {
 
 async function updateHeader(element, content) {
 	console.log("updating header");
+	console.log(element.titleElement);
+	element.titleElement.content.innerHTML = content.find(item => item["type"] == "text")["data"]["all"];
 	return;
 }
 

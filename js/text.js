@@ -28,7 +28,6 @@ async function addText(container, data, name, isAnimated) {
 				//await console.log(text.innerHTML);
 				//while (taglessLength(text) > value * len && i < 3) { 
 				await HTMLsnip(text, Math.floor(len - value * len));
-				await console.log(Math.floor((value) * len) + " " + taglessLength(text));
 				//	i++;
 				//}
 			//	await console.log(text.innerHTML);

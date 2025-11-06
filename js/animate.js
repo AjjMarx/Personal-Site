@@ -59,7 +59,7 @@ async function HTMLsnip(HTML, length) { //HTML only
 		node = deepest(HTML, (nothing) => { return true; })
 		ticker--;
 	}
-	console.log(ticker);
+	//console.log(ticker);
 	//console.log(node);
 	//return null;
 }
