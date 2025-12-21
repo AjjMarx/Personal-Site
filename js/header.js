@@ -27,7 +27,7 @@ function addHeader(container, data, name, isAnimated) {
 	title.style.padding = "0px 0px 0px 0x";	
 
 	//title.content.style.display = "flex";
-	title.content.style.height = "3em";
+	title.content.style.height = "3.5em";
 	title.content.style.top = "-4px";
 	//title.content.style.justifyContent = "center";
 	//title.content.style.alignItems = "center";
