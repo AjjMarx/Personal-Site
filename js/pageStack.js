@@ -1,5 +1,5 @@
 async function addPageStack(container, data, name, isAnimated) {
-        console.log("creating pageStack..", data["list"]);
+        //console.log("creating pageStack..", data);
 	const box = document.createElement("div");
 	box.id = assignName(name);   
 	container.appendChild(box);
@@ -34,16 +34,41 @@ async function addPageStack(container, data, name, isAnimated) {
 				//console.log(line[0]);
 				if (line[0] == '-') {
 					//console.log(line.substring(1));
-					const res = await fetch(line.substring(1));
-					const data = await res.json();
-					console.log(res);
-					console.log(data["meta"]["en_title"]);
-					list.push({
-						page: "#/" + line.substring(7, line.length - 5),
-						title : `<p style="font-size: 22px;">` + String(data["meta"]["en_title"]) + "</p>",
-						subtitle : `<p style="color: #575757;">` + String(data["meta"]["en_subtitle"]) + "</p>",
-						star : (data["meta"]["star"] ?? false)
-					});
+					console.log(line.indexOf("*"));
+					if (line.indexOf("*") != -1) {
+						let i = 0;
+						console.log("wfwfwfwf");
+						console.log(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
+						while (i < 10000 && await pathExists(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1))) { i++; }
+						i--;
+						while (i >= 0 && await pathExists(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1))) {
+							const lineP = line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1);
+							console.log(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
+							const res = await fetch(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
+							console.log(res + "aa");
+							const data = await res.json();
+							console.log(data);
+							console.log(data["meta"]["en_title"]);
+							list.push({
+								page: "#/" + lineP.substring(6, lineP.length - 5),
+								title : `<p style="font-size: 22px;">` + String(data["meta"]["en_title"]) + "</p>",
+								subtitle : `<p style="color: #575757;">` + String(data["meta"]["en_subtitle"]) + "</p>",
+								star : (data["meta"]["star"] ?? false)
+							});
+							i--;
+						}						
+					} else {
+						const res = await fetch(line.substring(1));
+						const data = await res.json();
+						console.log(res);
+						console.log(data["meta"]["en_title"]);
+						list.push({
+							page: "#/" + line.substring(7, line.length - 5),
+							title : `<p style="font-size: 22px;">` + String(data["meta"]["en_title"]) + "</p>",
+							subtitle : `<p style="color: #575757;">` + String(data["meta"]["en_subtitle"]) + "</p>",
+							star : (data["meta"]["star"] ?? false)
+						});
+					}
 				}
 			}	
 		}
