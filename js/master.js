@@ -6,17 +6,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 	customElements.define('special-div', SpecialDiv);
 	const filePath = findPageFileName(window.location.hash.slice(1));
         //console.log(findPageFileName(window.location.hash.slice(1)));
-	//try {
+	try {
                 const res = await fetch(filePath);
                 const data = await res.json();
 	
                 renderPage(app, data);
-        //} //catch(err) {
-          //      console.error("Loading error :(");
-          //      const test = document.createElement("div"); 
-          //      test.innerHTML = "404", 16;
-          //      container.appendChild(test);
-       // }
+        } catch(err) {
+                console.error("Loading error :(");
+                const test = document.createElement("div"); 
+                test.innerHTML = "404", 16;
+                container.appendChild(test);
+        }
 });
 
 let updateHash = "";
