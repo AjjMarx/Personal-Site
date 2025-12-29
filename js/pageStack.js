@@ -20,8 +20,8 @@ async function addPageStack(container, data, name, isAnimated) {
 	box.style.overflow = "auto";	
 	//box.reload();
 	box.style.direction = 'rtl';
+	box.directory = data["list"];
 
-	let tp = 33;
 	let list = [];
 
 	//generate pagelist
@@ -34,21 +34,15 @@ async function addPageStack(container, data, name, isAnimated) {
 				//console.log(line[0]);
 				if (line[0] == '-') {
 					//console.log(line.substring(1));
-					console.log(line.indexOf("*"));
 					if (line.indexOf("*") != -1) {
 						let i = 0;
-						console.log("wfwfwfwf");
 						console.log(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
 						while (i < 10000 && await pathExists(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1))) { i++; }
 						i--;
 						while (i >= 0 && await pathExists(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1))) {
 							const lineP = line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1);
-							console.log(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
 							const res = await fetch(line.substring(1, line.indexOf("*")) + i + line.substring(line.indexOf("*")+1));
-							console.log(res + "aa");
 							const data = await res.json();
-							console.log(data);
-							console.log(data["meta"]["en_title"]);
 							list.push({
 								page: "#/" + lineP.substring(6, lineP.length - 5),
 								title : `<p style="font-size: 22px;">` + String(data["meta"]["en_title"]) + "</p>",
@@ -60,8 +54,6 @@ async function addPageStack(container, data, name, isAnimated) {
 					} else {
 						const res = await fetch(line.substring(1));
 						const data = await res.json();
-						console.log(res);
-						console.log(data["meta"]["en_title"]);
 						list.push({
 							page: "#/" + line.substring(7, line.length - 5),
 							title : `<p style="font-size: 22px;">` + String(data["meta"]["en_title"]) + "</p>",
@@ -77,23 +69,26 @@ async function addPageStack(container, data, name, isAnimated) {
 		console.log(err);
 	}
 
-	console.log(list);
+	//console.log(list);
+	box.pgList = [];
+	let tp = 2.1;
 
 	for (let i = 0; i < list.length; i++) {
 		const hyperLink = document.createElement('a');
 		hyperLink.href = list[i]["page"];
+		box.pgList.push(hyperLink);
 		box.appendChild(hyperLink);
 		const pg = document.createElement("special-div");
 		//pg.style.backgroundColor = "blue";
 		pg.id = assignName(0);
 		typeHash.set(parseInt(pg.id, 16), "Page Stack Element");
 		pg.style.position = "absolute";
-		pg.style.width = (wideWidth - 14) + "px";
+		pg.style.right = "0px";
 		pg.style.left = "14px";
 		pg.style.height = "5.5em";
-		pg.style.top = tp + "px";
+		pg.style.top = tp + "em";
 		pg.style.overflowY = "none";
-		tp = tp + 92;
+		tp = tp + 5.7;
 		//pg.style.padding = "4px 4px 4px 4px";
 		hyperLink.appendChild(pg);
 		const title = document.createElement("div");
@@ -134,12 +129,42 @@ async function addPageStack(container, data, name, isAnimated) {
 	});
 }
 
-function removePageStack(element) {
-	if (element) { element.remove(); }
+async function removePageStack(element) {
+	if (element) {
+	console.log("removing page stack");		
+	return new Promise((resolve) => {
+		interpolate(40, 302, 0, 0, 500, async (value) => {
+			element.style.width = 302 - value + 40 + "px";
+			for (chld of element.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+		}, () => {if (element) { element.remove(); resolve();}})
+	});
+	}
 }
 
 async function updatePageStack(element, content) {
 	console.log("updating page stack");
-	return;
+	if (element.directory && element.directory == content["list"]) { console.log("unchanged page stack"); return; }		
+	return new Promise(async (resolve) => {
+		console.log("Changing Page Stack");
+		let oldId = element.id;	
+		let parentElement = element.parentElement;
+		await addPageStack(parentElement, content, 999999, true);
+		newElement = document.getElementById("999999");
+		newElement.style.left = "";
+		newElement.style.right = "calc((100% + 1000px) / 2 - 302px)";
+		interpolate(40, 300, 0, 0, 500, async (value) => {
+			element.style.width = 302 - value + "px";
+			newElement.style.width = value + "px";
+			for (chld of element.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+			for (chld of newElement.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+		}, () => {
+			element.remove();
+			newElement.id = oldId;
+			newElement.style.right = "";
+			newElement.style.width = "302px";
+			newElement.style.left = "calc((100% - 1000px) / 2)";
+			resolve();
+		})
+	});
 }
 
