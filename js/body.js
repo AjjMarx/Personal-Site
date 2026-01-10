@@ -1,4 +1,4 @@
-function addBody(container, data, name) {
+function addBody(container, data, name, isAnimated) {
         //console.log("creating body..");
         const body = document.createElement("special-div");
 	body.id = assignName(name);   
@@ -19,6 +19,7 @@ function addBody(container, data, name) {
         body.style.top = "4em";
         body.style.bottom = "10px";
 	body.style.minWidth = "calc(100vh * (0.5) - 8px)";
+	body.toggleAbberation();
 	let footer_allow = true
 	body.reload();
         for (const item of data) {
@@ -54,13 +55,13 @@ function addBody(container, data, name) {
 				}
 			});	
 
-			generateChildren(footer, item["data"], false);
+			generateChildren(footer, item["data"], isAnimated);
 		} else {
-			const id = assignName(item.id);
-			typeHash.set(parseInt(id, 16), item["type"]);
-			spawnFunctions[item["type"]](body, item["data"], id, false);  
+			//typeHash.set(parseInt(id, 16), item["type"]);
+			//spawnFunctions[item["type"]](body, item["data"], id, false);  
 		}
-        }       
+        }      
+	generateChildren(body, data, isAnimated); 
         window.addEventListener("resize", () => {
 		if (parseInt(container.offsetWidth, 10) >= 1000) {
 			body.style.width = wideWidth;
@@ -133,12 +134,13 @@ async function updateBody(element, newContent) {
 			if (item["type"] == "footer" && footer_allow) { 
 				//generateChildren(footer, item["data"]);
 			} else {
-				const id = assignName(item.id);
-				typeHash.set(parseInt(id, 16), item["type"]);
-				await spawnFunctions[item["type"]](body, item["data"], id, animating);  
+				//const id = assignName(item.id);
+				//typeHash.set(parseInt(id, 16), item["type"]);
+				//await spawnFunctions[item["type"]](body, item["data"], id, true, true);  
 			}
 			if (content.scrollHeight > parseInt(element.getBoundingClientRect().height)) { animating = false; }
 		}
+		generateChildren(body, newContent, true);
 		statusHash.set(element.id, "idle");	
 		resolve();
 	});
