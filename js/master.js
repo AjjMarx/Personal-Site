@@ -60,13 +60,10 @@ function findPageFileName(name) {
 }
 
 async function generateChildren(container, content, isAnimated) {
-	console.log(isAnimated);
 	for (const item of content) {
 		const id = assignName(item.id);
 		typeHash.set(id, item["type"]);
-		console.log(item["type"], item["type"] in supportedFuctions);
 		if (item["type"] in supportedFuctions && supportedFuctions[item["type"]]) {
-			console.log(item["type"]);
 			await spawnFunctions[item["type"]](container, item["data"], id, isAnimated);
 		}
 	}
@@ -124,7 +121,7 @@ async function updatePage(container, data) { //for swapping out JSONs, not gener
 	for (const [id, type] of intersection) {
 		const elemId = document.getElementById(id)
 		if (type[0] in supportedFuctions && supportedFuctions[type[0]]) {	
-			promises.push( updateFunctions[type[0]](elemId, type[1]) );
+			promises.push( updateFunctions[type[0]](elemId, type[1], true) );
 		}
 	}
 	await Promise.all(promises);
