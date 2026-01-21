@@ -35,13 +35,11 @@ async function addLine(container, data, name, isAnimated) {
 
 async function removeLine(element, isAnimated) {
 	return new Promise (async (resolve, reject) => { 
-		console.log("Removing line");
 		if (!element) { console.log("No such line"); reject(); }
 		if (statusHash.get(element.id) == "removing"){ console.log("double removal being neglected"); reject(); }
 		
 		statusHash.set(element.id, "removing");
 		const wdth = parseInt(element.style.width);
-		console.log(wdth)
 		if (isAnimated) {
 			await interpolate(0, 1, 0, 0, 70, (value) => {
 				element.style.width = (100 - value * 100) + "%";

@@ -76,7 +76,7 @@ function addBody(container, data, name, isAnimated) {
 	//console.log("done rendering body");
 }
 
-async function removeBody(element) {
+async function removeBody(element, isAnimated) {
 	console.log("removing body"); 
 	//console.log(element);
 	if (!element) { return; }
@@ -94,7 +94,7 @@ async function removeBody(element) {
 }	
 
 async function updateBody(element, newContent, isAnimated) {
-	console.log("updating body");
+	console.log("updating body", isAnimated);
 	statusHash.set(element.id, "updating");	
 	return new Promise(async (resolve, reject) => {	
 		let content = element.content

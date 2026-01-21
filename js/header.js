@@ -23,8 +23,8 @@ function addHeader(container, data, name, isAnimated) {
 	title.content.style.height = "100%";
 	title.content.style.overflow = "hidden";
 	title.style.left = "calc(50% - 196px)"
-	title.content.style.padding = "0px 0px 0px 0x";	
-	title.style.padding = "0px 0px 0px 0x";	
+	title.content.style.padding = "9px 0px 0px 0px";	
+	title.style.padding = "0px -10px 0px 0x";	
 
 	//title.content.style.display = "flex";
 	title.content.style.height = "3.5em";
