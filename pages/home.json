@@ -5,7 +5,7 @@
                 "en_subtitle": "Learn about me",
                 "zh_subtitle": "下认识我", 
                 "languages": ["en", "zh"],
-		"star" : true
+		"tags": ["pin"]
         },
 
 	"content": [
@@ -32,14 +32,48 @@
 
         {"type": "body", "id": "72d8", "priority": 0, "data":[
                 {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center><span class=\n"}},
-                {"type": "img", "data": {
+		{"type": "line", "data":{"width": 100}},
+		{"type": "graph", "data": {
+			"location" : "center",
+			"equations" : ["x", "Math.sqrt(Math.abs(x)) + Math.cos(x)", "-x/3+Math.log(Math.cos(x)+3) + 2", "Math.sqrt(1/Math.sin(x))"],
+			"eqColors" : ["Red", "Green", "Blue"],
+			"points" : [[4.16442, 1.51973], [6.36401, 3.51943]],
+			"pColors" : ["black", "red"],
+			"x": [-4,15],
+			"y": [-2,10],
+			"lineSpacing": 3,
+			"width": 0.85,
+			"aspect_ratio" : 2 
+		}},
+		{"type":"center", "data":[
+                        {"type":"icon", "data":{
+                                "name": "Github",
+                                "link": "https://github.com/AjjMarx",
+				"color": "#101010",
+				"size": "huge"
+                        }},
+                        {"type":"icon", "data":{
+                                "name": "LinkedIn",
+                                "link": "https://www.linkedin.com/in/alexandra-marx-85622a242/",
+				"color": "#2D64BC",
+				"size": "huge"
+                        }},
+			{"type":"icon", "data":{
+				"name": "Youtube",
+				"color": "#B8093A",  
+				"link": "https://www.youtube.com/@alexajoy8836",
+				"size": "huge"
+			}}
+                ]},
+		{"type":"text", "data":{"en": "I am <b>Alexandra Marx</b>. An undergraduate CS and Mathematics major at the University of Michigan in Ann Arbor.<br>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n", "zh": "我叫<b>Alexandra Marx （马心婕）</b>，密西根大学的电脑科学和数学专业本科生在安娜堡。\n"}},
+		{"type": "img", "data": {
                         "location" : "center",
                         "file": "/media/cat.jpeg",
                         "width": 0.5,
                         "en_hover": "My Professional Portrait (2025)",
                         "zh_hover": "我的正式的肖像（2025）"
                 }},
-                {"type":"text", "data":{"en": "I am <b>Alexandra Marx</b>. An undergraduate CS and Mathematics major at the University of Michigan in Ann Arbor.<br>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n", "zh": "我叫<b>Alexandra Marx （马心婕）</b>，密西根大学的电脑科学和数学专业本科生在安娜堡。\n"}},
+                	
 		{"type": "img", "data": {
 			"location" : "right",
 			"file": "/media/sleepy.jpeg",
@@ -47,20 +81,8 @@
 			"en_hover": "a sleepy kitty",
 			"zh_hover": "一只累的小猫"
 		}},
-		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}},
-		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}},
-                {"type":"center", "data":[
-                        {"type":"icon", "data":{
-                                "name": "Github",
-                                "image": "/files/github.png",
-                                "link": "https://github.com/AjjMarx"
-                        }},
-                        {"type":"icon", "data":{
-                                "name": "LinkedIn",
-                                "image": "/files/LinkedIn.png",
-                                "link": "https://www.linkedin.com/in/alexandra-marx-85622a242/"
-                        }}
-                ]},
+		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}},	
+		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}}, 
 		{"type":"footer", "id": "db62", "data":[
 			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
 		]}	

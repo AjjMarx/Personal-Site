@@ -4,7 +4,8 @@
                 "zh_title": "我的书单",
                 "en_subtitle": "...and reviews",
                 "zh_subtitle": "...还有有些书评", 
-                "languages": ["en", "zh"]
+                "languages": ["en", "zh"],
+		"tags" : ["star", "pin", "education"]
         },
 
 	"content": [

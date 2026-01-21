@@ -5,7 +5,7 @@
                 "en_subtitle": "Post 0",
                 "zh_subtitle": "...还有有些书评", 
                 "languages": ["en", "zh"],
-		"star" : true
+		"tags" : ["star", "other"]
         },
 
 	"content": [
