@@ -10,69 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Noto+Sans+SC:wght@100..900&family=Varela+Round&display=swap" rel="stylesheet">
 
-  <svg style="display:none">
-	<filter id="abberate" x="0" y="0" width="100%" height="100%">
-		<feImage 
-			id="feImageTexture"
-			href="media/abberate.png"
-			result="map"
-			preserveAspectRatio = "none"
-		/>
-		<feDisplacementMap  
-			in="SourceGraphic" 
-			in2="map"
-			scale="48"
-			xChannelSelector="R"
-			yChannelSelector="G"
-			result="redDisp"
-		/>		
-		<feColorMatrix in="map" result="mapNeutral" type="matrix" values = "0 0 0 0 0.5
-										    0 1 0 0 0	
-										    0 0 1 0 0
-										    0 0 0 1 0"/>
-		<feDisplacementMap  
-			in="SourceGraphic" 
-			in2="mapNeutral"
-			scale="48"
-			xChannelSelector="R"
-			yChannelSelector="G"
-			result="greenDisp"
-		/>
-		<feDisplacementMap  
-			in="SourceGraphic" 
-			in2="map"
-			scale="48"
-			xChannelSelector="B"
-			yChannelSelector="G"
-			result="blueDisp"
-		/>
-		<feColorMatrix in="redDisp" result="redChannel" type="matrix" values = "0.5804 0 0 0 0
-						       			       	        0 0.2431 0 0 0
-						       		    			0 0 0.28235 0 0
-						       		    			0 0 0 1 0"/>
-		<feColorMatrix in="greenDisp" result="greenChannel" type="matrix" values = "0.255 0 0 0 0
-												0 0.3843 0 0 0
-												0 0 0.0980 0 0
-											 	0 0 0 1 0"/>
-		<feColorMatrix in="blueDisp" result="blueChannel" type="matrix" values = "0.164 0 0 0 0
-											  0 0.3725 0 0 0
-											  0 0 0.61908 0 0
-											  0 0 0 1 0"/>
-		<feComposite 
-			in="redChannel" 
-			in2="blueChannel" 
-			operator="arithmetic" 
-			k1="0" k2="1" k3="1" k4="0"
-			result="RBMix"
-		/>
-		<feComposite 
-			in="RBMix"
-			in2="greenChannel"
-			operator="arithmetic" 
-			k1="0" k2="1" k3="1" k4="0"
-		/>
-	</filter>	
-  </svg>
+  
   <style>
 
   </style>
@@ -88,7 +26,6 @@
   <script defer src="js/body.js"></script>
   <script defer src="js/text.js"></script>
   <script defer src="js/center.js"></script>
-  <script defer src="js/icon.js"></script>
   <script defer src="js/image.js"></script>
   <script defer src="js/line.js"></script>
   <script defer src="js/graph.js"></script>
