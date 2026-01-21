@@ -22,7 +22,7 @@ async function addText(container, data, name, isAnimated) {
 				text.innerHTML = dupe.innerHTML; //reset
 				await HTMLsnip(text, Math.floor(len - value * len));
 			}
-			interpolate(0, 1, 0, 0, len/6, update, () => {
+			interpolate(0, 1, 0, 0, Math.max(len/10, 40), update, () => {
 				text.innerHTML = dupe.innerHTML ;
 				dupe.remove();
 				resolve();
@@ -37,25 +37,14 @@ async function addText(container, data, name, isAnimated) {
 async function removeText(element, isAnimated) {
 	if (element) {
 		return new Promise(async (resolve, reject) => {
-			//console.log("AA", element);
 			if (isAnimated) {
 				const len = taglessLength(element);
-			//	await console.log(len);
-
 				async function update(value) {
-					//await console.log(Math.floor(len*(1-value)));
-					//await HTMLsnip(element, taglessLength(element) - Math.floor((1-value)*len)); 
-					let l = taglessLength(element);
-					let d = deepest(element);
-					while (l > Math.floor((1-value)*len)) {
-						HTMLsnip(element, 1);
-						l--
-					}
+					HTMLsnip(element, taglessLength(element) - Math.floor((1-value)*len));
 				}
-				await interpolate(0, 1, 0, 0, len/6, update, () => {});
+				await interpolate(0, 1, 0, 0, Math.max(len/10, 40), update, () => {});
 			}	
 			element.remove();
-			console.log("done removing text");
 			resolve();
 		});
 	}

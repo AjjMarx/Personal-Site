@@ -41,7 +41,6 @@ async function HTMLsnip(HTML, length) { //HTML only
 	let ticker = length;
 
 	while (ticker > 0 && node && node != HTML) {
-		//console.log(node.sType);
 		if ((node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) && node.localName != 'img' && node.localName != 'svg') {
 			if (node.textContent.length <= ticker) {
 				node.remove();
