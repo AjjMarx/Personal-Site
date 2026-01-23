@@ -1,6 +1,8 @@
 let typeHash = new Map();
 let statusHash = new Map(); //adding, removing, updating, idle, none
 
+let mainIconManager;
+
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
 	customElements.define('special-div', SpecialDiv);
@@ -9,6 +11,12 @@ window.addEventListener("DOMContentLoaded", async () => {
 	try {
                 const res = await fetch(filePath);
                 const data = await res.json();
+
+		const iconListRes = await fetch("media/icons/iconList.json");
+		const iconListData = await iconListRes.json();
+		console.log(iconListData.list);
+
+		window.mainIconManager = new IconManager("media/icons", iconListData.list);
 	
                 renderPage(app, data);
         } catch(err) {

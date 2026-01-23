@@ -69,6 +69,29 @@ async function updateImg(element, content) {
 
 //Icon
 
+class IconManager {
+	constructor(lib, itms) {
+		this.library = lib + "/";
+		this.items = itms;
+		this.map = new Map();
+		this.parser = new DOMParser();
+	}
+
+	async get (name) {
+		if (this.map.has(name)) {
+			return this.map.get(name);
+		} else if (this.items.includes(name)) {
+			const intake = await fetch(this.library + name + ".svg");
+			console.log(intake);
+			let svgRaw = await intake.text();
+			const svgDOM = this.parser.parseFromString(svgRaw, "image/svg+xml").firstChild;
+			this.map.set(name, svgDOM);
+			return svgDOM;
+		}
+		return undefined;
+	}
+}
+
 iconSize = {
 	"small" : 1.75,
 	"normal" : 2.5,
@@ -84,12 +107,17 @@ marginSize = {
 }
 
 async function addIcon(container, data, name, isAnimated) {
+	if (!window.mainIconManager) { console.log("icon manager is not available");  return;}
 	return new Promise(async (resolve, reject) => {		
-		const intake = await fetch(`media/icons/${data["name"]}.svg`);
-		let svgRaw = await intake.text();
-		svgRaw = svgRaw.replace(/fill:#000000/g, `fill:${data["color"]}`);
-		const parser = new DOMParser();
-		const svgDOM = parser.parseFromString(svgRaw, "image/svg+xml").firstChild;
+		//const intake = await fetch(`media/icons/${data["name"]}.svg`);
+		//let svgRaw = await intake.text();
+		//svgRaw = svgRaw.replace(/fill:#000000/g, `fill:${data["color"]}`);
+		//const parser = new DOMParser();
+		//const svgDOM = parser.parseFromString(svgRaw, "image/svg+xml").firstChild;
+		const svgDOM = await window.mainIconManager.get(data["name"]);
+		for (let child of svgDOM.children) {
+			child.outerHTML = child.outerHTML.replace(/fill:#000000/g, `fill:${data["color"]}`);
+		}
 		//console.log(svgDOM.firstChild);
 		svgDOM.id = assignName(name);
 		svgDOM.alt = data["name"] ?? "untitled icon";
