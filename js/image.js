@@ -82,7 +82,6 @@ class IconManager {
 			return this.map.get(name);
 		} else if (this.items.includes(name)) {
 			const intake = await fetch(this.library + name + ".svg");
-			console.log(intake);
 			let svgRaw = await intake.text();
 			const svgDOM = this.parser.parseFromString(svgRaw, "image/svg+xml").firstChild;
 			this.map.set(name, svgDOM);
