@@ -57,49 +57,34 @@ async function addGraph(container, data, name, isAnimated){
 	}
 	vis.innerHTML += `<polyline points="${data.x[0]},0 ${data.x[1]},0" /fill="none" stroke="oklch(0.75 0.225 330)" stroke-width="2", vector-effect="non-scaling-stroke">`;
 	vis.innerHTML += `<polyline points="0,${data.y[0]} 0,${data.y[1]}" /fill="none" stroke="oklch(0.75 0.225 240)" stroke-width="2", vector-effect="non-scaling-stroke">`;
-	for (let i = 0; i < data.equations.length; i++) {
-		let eq = data.equations[i];
-		let col = data.eqColors[i] ?? "Black";
-		function evaluateFormula(x) {
-			return eval(eq);
-		}
-		let temp = `<polyline points="`;
-		let delta = 0;
-		let x = data.x[0];
-		let loop = 0;
-		let pointCount = 0
-		let nonEmpty = false;
-		while (loop < 10000 && pointCount < 2000 && x < data.x[1]) {
-			let xp = Math.trunc(x*100)/100;
-			if (!isNaN(evaluateFormula(x)) || evaluateFormula(x) > data.y[1] || evaluateFormula(x) < data.y[0]) {
-				if (evaluateFormula(xp) < data.y[1] + 1 && evaluateFormula(xp) > data.y[0] -1) {
-					temp += `${xp},${Math.trunc(evaluateFormula(xp)*100)/100} `;
-				}
-				pointCount++;
-				nonEmpty = true;
-				if (!isNaN(evaluateFormula(x+0.01))) {
-					x += 0.1 / Math.sqrt(Math.pow((evaluateFormula(x)-evaluateFormula(x+0.01))/0.01, 2)+ 1);
-				} else { x += 0.01; }
-			} else if (nonEmpty) {
-				temp += `" /fill="none" stroke="${col}" stroke-width="2", vector-effect="non-scaling-stroke"></polyline><polyline points="`;
-				nonEmpty = false;
-				x += 0.1;
-			} else { x += 0.01;}
-			loop++;
-		}
-		//console.log(loop);
-		temp += `" /fill="none" stroke="${col}" stroke-width="2", vector-effect="non-scaling-stroke">`;
-		vis.innerHTML += temp;
-	}
-	for (let i = 0; i < data.points.length; i++) {
-		let p = data.points[i];
-		let col = data.pColors[i];
-		vis.innerHTML += `<polyline points="${p[0]},${p[1]} ${p[0]+0.01},${p[1]}" /fill="none" stroke="${col}" stroke-width="8", stroke-linecap="round" vector-effect="non-scaling-stroke">`;
-		vis.innerHTML += `<polyline points="${p[0]},${p[1]} ${p[0]+0.01},${p[1]}" /fill="none" stroke="white" stroke-width="4", stroke-linecap="round" vector-effect="non-scaling-stroke">`;
-	}
-	
+
+	const loadingBox = document.createElement("div");
+	loadingBox.style.position = "absolute";
+	loadingBox.style.width = "100%";
+	loadingBox.style.top = "calc(50% - 1em)";
+	loadingBox.style.textAlign = "center";
+	loadingBox.innerHTML = "<h3>loading..</h3>";
+
 	//'<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">'
 	await graph.content.appendChild(vis);
+	graph.content.appendChild(loadingBox);
+
+
+	function loadData() {
+		console.log("loading graph");
+		const tempWorker = new Worker('./js/graphWorker.js');
+		tempWorker.postMessage(data);
+		tempWorker.onmessage = function(e) {
+			const result = e.data
+			for (let i of result) {
+				vis.innerHTML += i;
+			}
+			loadingBox.remove();
+			tempWorker.terminate();
+		}
+		tempWorker.onError = (err) => {console.error(err);};
+	}
+
 
 	return new Promise((resolve, reject) => {
 		if (isAnimated) {
@@ -114,17 +99,16 @@ async function addGraph(container, data, name, isAnimated){
 				graph.style.display = "auto";
 				graph.reload(); 
 				resolve(); 
+				setTimeout(() => {loadData();}, 100);
 			});
 		} else {	
 			graphWrapper.style.width = 80 * data["width"] + "%";
 			graph.style.display = "auto";
 			graph.reload();
 			resolve(); 
+			setTimeout(() => {loadData();}, 100);
 		}
 	});
-	
-
-	return;
 }
 
 async function removeGraph(element, isAnimated) {
