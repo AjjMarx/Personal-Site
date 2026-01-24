@@ -14,7 +14,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 		const iconListRes = await fetch("media/icons/iconList.json");
 		const iconListData = await iconListRes.json();
-		console.log(iconListData.list);
 
 		window.mainIconManager = new IconManager("media/icons", iconListData.list);
 	

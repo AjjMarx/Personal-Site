@@ -71,7 +71,6 @@ async function addGraph(container, data, name, isAnimated){
 
 
 	function loadData() {
-		console.log("loading graph");
 		const tempWorker = new Worker('./js/graphWorker.js');
 		tempWorker.postMessage(data);
 		tempWorker.onmessage = function(e) {
@@ -85,6 +84,7 @@ async function addGraph(container, data, name, isAnimated){
 		tempWorker.onError = (err) => {console.error(err);};
 	}
 
+	window.addEventListener("resize", () => graph.reload());
 
 	return new Promise((resolve, reject) => {
 		if (isAnimated) {

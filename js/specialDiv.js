@@ -40,7 +40,7 @@ class SpecialDiv extends HTMLElement {
 		};
 
 		this.reload();
-		window.addEventListener("resize", () => this.reload());
+		//window.addEventListener("resize", () => this.reload());
 	}
 
 	#scroll() {
