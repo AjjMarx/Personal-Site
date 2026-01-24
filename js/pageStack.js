@@ -114,24 +114,40 @@ async function addPageStack(container, data, name, isAnimated) {
 			pg.appendChild(badgeBar);
 			for (tagI in list[i]["tags"]) {
 				const tag = list[i]["tags"][tagI];
+				//console.log((parseInt(tagI) + i) % 8);
 				await addIcon(badgeBar,
 					{
 						"name" : tag,
 						"size" : "small",
-						"color" : convertedCols[(parseInt(tagI) + i) % 8],
+						"color" : convertedCols[7],
 					},
 				0, false);
 			}
 		}
-	}	
+		pg.reload();
+	}
 
-	window.addEventListener("resize", () => {
-		if (parseInt(container.offsetWidth, 10) >= 1000) {
+	function dynamicUpdate() {
+		if (parseInt(container.offsetWidth, 10) >= 1000 && box.style.display != "block") {
+			console.log("wide");
+			let tId;
+			for (let [key, value] of typeHash) { if (value == 'header') { tId = key }}
+			toggleDropDown(document.getElementById(tId), box, true);
 			box.style.display = "block";
-		} else if (parseInt(container.offsetWidth, 10) < 1000) {
+			for (let pg of box.pgList) {pg.firstChild.reload();}
+		} else if (parseInt(container.offsetWidth, 10) < 1000 && box.style.display != "none") {
+			console.log("narrow");
 			box.style.display = "none";
+			let tId;
+			for (let [key, value] of typeHash) { if (value == 'header') { tId = key}}
+			toggleDropDown(document.getElementById(tId), box, false);
 		}
-	});
+	}
+
+	box.style.display = null;
+	dynamicUpdate();
+
+	window.addEventListener("resize", dynamicUpdate);
 }
 
 convertedCols = ["#F579A4", "#F5824A", "#C89C00", "#70B346", "#00B99F", "#00B0E7", "#7E9CFF", "#CC86EB"];
