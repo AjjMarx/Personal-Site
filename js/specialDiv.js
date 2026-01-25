@@ -120,6 +120,9 @@ class SpecialDiv extends HTMLElement {
 	}
 
 	toggleAbberation() {
+		if ((navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && navigator.userAgent) ||
+		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) 
+		{ this.content.style.top = "4px"; return; }
 		this.hasAbberation = true;
 		this.topAbb = document.createElement("canvas");
 		this.topAbb.style.position = "absolute";
