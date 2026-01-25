@@ -101,7 +101,7 @@ window.addEventListener("popstate", (e) => {
 	setTimeout(() => {
 		console.log(window.location.pathname);
 		updateRoutine(window.location.pathname);
-	}, 50);
+	}, 500);
 });
 
 function findPageFileName(name) {
