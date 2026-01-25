@@ -6,6 +6,7 @@ let mainIconManager;
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
 	customElements.define('special-div', SpecialDiv);
+	console.log(window.location);
 	const filePath = findPageFileName(window.location.hash.slice(1));
         //console.log(findPageFileName(window.location.hash.slice(1)));
 	let res;
