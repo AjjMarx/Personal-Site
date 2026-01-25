@@ -112,10 +112,12 @@ horizontalElements = 0
 function renderPage(container, data) {
 	document.addEventListener('click', (e) => {
 		const link = e.target.closest('a');
-		if (link && link.href.startsWith(window.location.origin)) {
+		if (link && link.href && link.href.startsWith(window.location.origin)) {
 			e.preventDefault();
 			console.log(link.href);
-			updateRoutine(link.href);
+			let url = new URL(link.href);
+			console.log(url.pathname);
+			updateRoutine(url.pathname);
 		}
 	});
 
