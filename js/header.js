@@ -56,9 +56,11 @@ function addHeader(container, data, name, isAnimated) {
 	header.dropDown = dropDown;
 	header.box = null;
 
+	let timer = 0;
+
 	dropDown.addEventListener("click", async (event) => { 
-		console.log("Click", header.box);
-		if (header.box && header.box.style.display != "block") {	
+		timer = performance.now();
+		if (header.box && header.box.style.display != "block" && dropDown.style.display != 'none') {	
 			header.box.style.left = "0px";
 			header.box.style.width = "0px";
 			header.box.style.display = "block";
@@ -68,7 +70,7 @@ function addHeader(container, data, name, isAnimated) {
 			}, () => {})
 			header.box.style.width = "302px";
 			for (let pg of header.box.pgList) {pg.firstChild.reload();}
-		} else if (header.box && header.box.style.display != "none") {
+		} else if (header.box && header.box.style.display != "none" && dropDown.style.display != 'none') {
 			await interpolate(40, 302, 0, 0, 200, async (value) => {
 				header.box.style.width = 302 - value + 40 + "px";
 				for (chld of header.box.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
@@ -77,6 +79,22 @@ function addHeader(container, data, name, isAnimated) {
 			header.box.style.width = "302px";
 			for (let pg of header.box.pgList) {pg.firstChild.reload();}
 		}
+	})
+
+
+	document.addEventListener("click", async (event) => {
+		setTimeout(async () => {
+			if (header.box && header.box.style.display != "none" && dropDown.style.display != 'none' && performance.now() - timer > 400) {
+				console.log("outside");
+				await interpolate(40, 302, 0, 0, 200, async (value) => {
+					header.box.style.width = 302 - value + 40 + "px";
+					for (chld of header.box.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+				}, () => {})
+				header.box.style.display = "none";
+				header.box.style.width = "302px";
+				for (let pg of header.box.pgList) {pg.firstChild.reload();}
+			}
+		}, 100);
 	})
 
 	dropDown.reload();

@@ -88,7 +88,7 @@ async function addPageStack(container, data, name, isAnimated) {
 		pg.style.top = tp + "em";
 		tp = tp + 5.7;
 		hyperLink.appendChild(pg);
-		pg.content.style.overflowY = "none";
+		pg.content.style.overflowY = "hidden";
 		pg.content.style.borderRadius = "24px"
 		pg.content.style.margin = "0px";
 		pg.content.style.padding = "0px";
@@ -186,7 +186,7 @@ async function updatePageStack(element, content) {
 		newElement = document.getElementById("999999");
 		newElement.style.left = "";
 		newElement.style.right = "calc((100% + 1000px) / 2 - 302px)";
-		interpolate(40, 300, 0, 0, 200, async (value) => {
+		interpolate(40, 300, 0, 0, 300, async (value) => {
 			element.style.width = 302 - value + "px";
 			newElement.style.width = value + "px";
 			for (chld of element.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
@@ -197,6 +197,7 @@ async function updatePageStack(element, content) {
 			newElement.style.right = "";
 			newElement.style.width = "302px";
 			newElement.style.left = "calc((100% - 1000px) / 2)";
+			console.log(newElement);
 			resolve();
 		})
 	});
