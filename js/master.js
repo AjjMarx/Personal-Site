@@ -94,6 +94,7 @@ async function updateRoutine(page) {
 
 window.addEventListener("popstate", (e) => {
 	console.log("Pop");
+	console.log(window.location.pathname);
 	updateRoutine(window.location.pathname);
 });
 
