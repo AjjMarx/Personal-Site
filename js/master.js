@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", async () => {
                 res = await fetch(filePath);
 		if (!res.ok) {
 			console.log(filePath, "404");
-			window.location.pathname = "/404";
+			//window.location.pathname = "/404";
 			res = await fetch("pages/404.json");
 		}
 	} catch(err) {
