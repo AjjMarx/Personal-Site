@@ -1,0 +1,41 @@
+{
+        "meta": {
+                "en_title": "Home Page",
+                "zh_title": "家",
+                "en_subtitle": "Learn about me",
+                "zh_subtitle": "下认识我", 
+                "languages": ["en", "zh"],
+		"tags": ["pin"]
+        },
+
+	"content": [
+
+        {"type": "header", "data":[
+                {"type": "text", "data":{"all": "<a href=\"#/blog/Reading\"><h1 class=\"bold\"><center>Alexa J. Marx</center></h1></a>"}},
+                {"type": "toggle", "data":{ 
+                        "location": "east",
+                        "type": "language",
+                        "dual": true,
+                        "options": [
+                                "<b>en</b>",
+                                "<zh>汉</zh>"
+                        ]
+                }}
+        ], "id": "a82f"},
+
+        {"type": "pageStack", "priority": 1, "data":{
+                "location": "left",
+                "en_title": "<h1>My Blog:</h1>",
+                "zh_title": "<h1>我的博客:</h1>",  
+                "list": "pages/index.txt"
+        }, "id": "5a11"},
+
+        {"type": "body", "id": "72d8", "priority": 0, "data":[
+                {"type": "text", "data": {"all": "<center><h1>404!</h1></center><span class=\n"}},	
+                {"type": "text", "data": {"all": "<center><p>Your page could not be found</p></center><span class=\n"}},	
+		{"type":"footer", "id": "db62", "data":[
+			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
+		]}
+        ]}
+	]
+}
