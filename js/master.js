@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
 	customElements.define('special-div', SpecialDiv);
 
-	path = sessionStorage.getItem('spa_path').slice(1);
+	path = sessionStorage.getItem('spa_path');
 	console.log(path);
 	const filePath = findPageFileName(path);
 	console.log(filePath);
@@ -18,20 +18,23 @@ window.addEventListener("DOMContentLoaded", async () => {
                 res = await fetch(filePath);
 		if (!res.ok) {
 			console.log(filePath, "404");
-			//window.location.pathname = "/404";
+			window.history.replaceState(null, "", "/404");
 			res = await fetch("pages/404.json");
 		}
 	} catch(err) {
 		console.errorr(err);
 	}
-                const data = await res.json();
+	
+	window.history.replaceState(null, "", path);
+        const data = await res.json();
+	
 	try {
 
 		const iconListRes = await fetch("media/icons/iconList.json");
 		const iconListData = await iconListRes.json();
 
 		window.mainIconManager = new IconManager("media/icons", iconListData.list);
-	
+		window.history.replaceState(null, "", savedPath)
                 renderPage(app, data);
         } catch(err) {
                 console.error("Loading error :", err);
@@ -85,7 +88,7 @@ function findPageFileName(name) {
         if(name == "/") {
                 return "pages/home.json";
         } 
-        return "pages/" + name + ".json";
+        return "pages" + name + ".json";
 }
 
 async function generateChildren(container, content, isAnimated) {
@@ -101,8 +104,6 @@ async function generateChildren(container, content, isAnimated) {
 horizontalElements = 0
 
 function renderPage(container, data) {
-	console.log(findPageFileName(window.location.hash.slice(1)));
-
 	for (const item of data.content) {
 		if(item["type"] == "header" || item["type"] == "pageStack") {
 			horizontalElements++;	
