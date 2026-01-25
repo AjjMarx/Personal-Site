@@ -4,10 +4,12 @@ async function addPageStack(container, data, name, isAnimated) {
 	box.id = assignName(name);   
 	container.appendChild(box);
 	box.style.position = "absolute";
+	box.style.zIndex = 1;
 	let wideWidth = 302;
 	let wideLeft = "calc((100% - 1000px) / 2)";
 	box.style.width = (wideWidth ) + "px";
 	box.style.left = wideLeft;
+	box.style.backgroundImage = "#000000";
 	if (parseInt(container.offsetWidth, 10) >= 1000) {
 		box.style.display = "block";
 	} else {
@@ -81,12 +83,15 @@ async function addPageStack(container, data, name, isAnimated) {
 		typeHash.set(parseInt(pg.id, 16), "Page Stack Element");
 		pg.style.position = "absolute";
 		pg.style.right = "0px";
-		pg.style.left = "14px";
+		pg.style.left = "4px";
 		pg.style.height = "5.5em";
 		pg.style.top = tp + "em";
-		pg.style.overflowY = "none";
 		tp = tp + 5.7;
 		hyperLink.appendChild(pg);
+		pg.content.style.overflowY = "none";
+		pg.content.style.borderRadius = "24px"
+		pg.content.style.margin = "0px";
+		pg.content.style.padding = "0px";
 		const title = document.createElement("div");
 		title.style.position = "absolute";
 		title.style.left = "16px";
@@ -127,20 +132,26 @@ async function addPageStack(container, data, name, isAnimated) {
 		pg.reload();
 	}
 
+
 	function dynamicUpdate() {
 		if (parseInt(container.offsetWidth, 10) >= 1000 && box.style.display != "block") {
 			console.log("wide");
+			box.style.left = wideLeft;
 			let tId;
 			for (let [key, value] of typeHash) { if (value == 'header') { tId = key }}
 			toggleDropDown(document.getElementById(tId), box, true);
 			box.style.display = "block";
+			box.style.backkgroundImage = "#00000000"
 			for (let pg of box.pgList) {pg.firstChild.reload();}
 		} else if (parseInt(container.offsetWidth, 10) < 1000 && box.style.display != "none") {
 			console.log("narrow");
+			box.style.left = "0px";
 			box.style.display = "none";
+			box.style.backgroundImage = "linear-gradient(to right, #FFFFFFFF, #00000000)";
 			let tId;
 			for (let [key, value] of typeHash) { if (value == 'header') { tId = key}}
 			toggleDropDown(document.getElementById(tId), box, false);
+			for (let pg of box.pgList) {pg.firstChild.reload();}
 		}
 	}
 
@@ -156,7 +167,7 @@ async function removePageStack(element) {
 	if (element) {
 	console.log("removing page stack");		
 	return new Promise((resolve) => {
-		interpolate(40, 302, 0, 0, 500, async (value) => {
+		interpolate(40, 302, 0, 0, 200, async (value) => {
 			element.style.width = 302 - value + 40 + "px";
 			for (chld of element.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
 		}, () => {if (element) { element.remove(); resolve();}})
@@ -175,7 +186,7 @@ async function updatePageStack(element, content) {
 		newElement = document.getElementById("999999");
 		newElement.style.left = "";
 		newElement.style.right = "calc((100% + 1000px) / 2 - 302px)";
-		interpolate(40, 300, 0, 0, 500, async (value) => {
+		interpolate(40, 300, 0, 0, 200, async (value) => {
 			element.style.width = 302 - value + "px";
 			newElement.style.width = value + "px";
 			for (chld of element.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }

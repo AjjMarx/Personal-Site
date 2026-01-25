@@ -10,6 +10,7 @@ function addHeader(container, data, name, isAnimated) {
 	header.style.width = "100%";
 	header.style.height = "4em";
 	header.style.minWidth = "600px";
+	header.style.zIndex = 2;
 
 	header.innerHTML = '<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + '<line x1="0px" y1="calc(50% - 1.5px)" x2="100%" y2="calc(50% - 1.5px)" stroke="oklch(0.75 0.225 240)" stroke-width="3px"/>' + '<line x1="0px" y1="calc(50% + 1.5px)" x2="100%" y2="calc(50% + 1.5px)" stroke="oklch(0.75 0.225 60)" stroke-width="3px"/>' + '<line x1="0px" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="3px"/>' + '</svg>'; 
 
@@ -24,7 +25,8 @@ function addHeader(container, data, name, isAnimated) {
 	title.content.style.overflow = "hidden";
 	title.style.left = "calc(50% - 196px)"
 	title.content.style.padding = "9px 0px 0px 0px";	
-	title.style.padding = "0px -10px 0px 0x";	
+	title.style.padding = "0px -10px 0px 0x";
+	title.content.style.borderRadius = "24px";
 
 	//title.content.style.display = "flex";
 	title.content.style.height = "3.5em";
@@ -43,18 +45,38 @@ function addHeader(container, data, name, isAnimated) {
 	dropDown.style.height = "2.7em";
 	dropDown.content.style.margin = "0px";
 	dropDown.content.style.padding = "0px";
+	dropDown.content.style.borderRadius = "24px";
 	dropDown.style.left = "8px";
 	dropDown.style.width = "calc(50% - 210px)";
 	dropDown.content.style.display = "flex";
 	dropDown.content.style.alignItems = "center";
 	dropDown.content.style.justifyContent = "center";
-	dropDown.content.innerHTML = "<h3 style='margin:0;'>More..</h3>"
+	dropDown.content.innerHTML = "<h3 style='margin:0; user-select:none;'>More..</h3>"
 
 	header.dropDown = dropDown;
-	header.stack = null;
+	header.box = null;
 
-	dropDown.addEventListener("click", (event) => { 
-		console.log("Click", header.stack);
+	dropDown.addEventListener("click", async (event) => { 
+		console.log("Click", header.box);
+		if (header.box && header.box.style.display != "block") {	
+			header.box.style.left = "0px";
+			header.box.style.width = "0px";
+			header.box.style.display = "block";
+			await interpolate(40, 302, 0, 0, 200, async (value) => {
+				header.box.style.width = value + "px";
+				for (chld of header.box.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+			}, () => {})
+			header.box.style.width = "302px";
+			for (let pg of header.box.pgList) {pg.firstChild.reload();}
+		} else if (header.box && header.box.style.display != "none") {
+			await interpolate(40, 302, 0, 0, 200, async (value) => {
+				header.box.style.width = 302 - value + 40 + "px";
+				for (chld of header.box.pgList) { if (chld.firstChild.tagName === 'SPECIAL-DIV') { chld.firstChild.reload(); } }
+			}, () => {})
+			header.box.style.display = "none";
+			header.box.style.width = "302px";
+			for (let pg of header.box.pgList) {pg.firstChild.reload();}
+		}
 	})
 
 	dropDown.reload();
@@ -76,7 +98,7 @@ async function updateHeader(element, content, isAnimated) {
 }
 
 function toggleDropDown(element, obj, isVis) {
-	element.stack = obj;
+	element.box = obj;
 	if (isVis) {
 		element.dropDown.style.display = "none";
 		element.dropDown.content.style.disply = "none";
