@@ -6,7 +6,8 @@ let mainIconManager;
 window.addEventListener("DOMContentLoaded", async () => {
         const app = document.getElementById("app");
 	customElements.define('special-div', SpecialDiv);
-	console.log(window.location);
+
+	console.log(sessionStorage.getItem('spa_path'));
 	console.log(window.location.pathname);
 	const filePath = findPageFileName(window.location.pathname);
         //console.log(findPageFileName(window.location.hash.slice(1)));
