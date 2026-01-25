@@ -107,7 +107,7 @@ horizontalElements = 0
 
 function renderPage(container, data) {
 	document.addEventListener('click', (e) => {
-		const link = e.target.cllosest('a');
+		const link = e.target.closest('a');
 		if (link && link.href.startsWith(window.location.origin)) {
 			e.preventDefault();
 			console.log(link);
