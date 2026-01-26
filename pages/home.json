@@ -11,7 +11,7 @@
 	"content": [
 
         {"type": "header", "data":[
-                {"type": "text", "data":{"all": "<a href=\"/blog/Reading\"><h1 class=\"bold\"><center>Alexa J. Marx</center></h1></a>"}},
+                {"type": "text", "data":{"all": "<a class='nav-link' href=\"/\"><h1 class=\"bold\"><center>Alexandra J. Marx</center></h1></a>"}},
                 {"type": "toggle", "data":{ 
                         "location": "east",
                         "type": "language",
@@ -33,18 +33,28 @@
         {"type": "body", "id": "72d8", "priority": 0, "data":[
                 {"type": "text", "data": {"all": "<center><h1>%whoami</h1></center><span class=\n"}},
 		{"type": "line", "data":{"width": 100}},
-		{"type": "graph", "data": {
-			"location" : "center",
-			"equations" : ["x", "Math.sqrt(Math.abs(x)) + Math.cos(x)", "-x/3+Math.log(Math.cos(x)+3) + 2", "Math.sqrt(1/Math.sin(x))"],
-			"eqColors" : ["Red", "Green", "Blue"],
-			"points" : [[4.16442, 1.51973], [6.36401, 3.51943]],
-			"pColors" : ["black", "red"],
-			"x": [-4,15],
-			"y": [-2,10],
-			"lineSpacing": 3,
-			"width": 0.85,
-			"aspect_ratio" : 2 
+		{"type": "img", "data": {
+                        "location" : "left",
+                        "file": "media/cat.jpeg",
+                        "width": 0.5,
+                        "en_hover": "My Professional Portrait (2025)",
+                        "zh_hover": "我的正式的肖像（2025）"
+                }},
+
+		{"type":"text", "data":{"en": 
+			"</br>I am <b>Alexandra (Alexa) J. Marx.</b> I am a junior <ins>Computer&nbsp;Science</ins> and <ins>Mathematical&nbsp;Sciences&nbsp;(Biology)</ins> double&nbsp;major at the University&nbsp;of&nbsp;Michigan in Ann&nbsp;Arbor. </br>My current areas of focus are math and computing education, simulations, computer graphics, and bioinformatics. I am an Ann Arbor native, previously attending WCC and AAPS.</br></br>"
 		}},
+
+
+		
+		{"type":"text", "data":{"en": 
+		"<b>For Recruiters and Professors:</b>  If you wish to see my resume or portfolio, click on the links below or to the left. If you wish to see my best and most professional, interview worthy, posts, <del>click&nbsp;here.</del></br>"
+		}},
+
+		{"type":"center", "data":[
+		{"type":"text", "data":{"en": "<h2><a href=\"/blog/Resume\">Resume</a>  ~~ <a href=\"/blog/Portfolio\">Portfolio</a></h2>"}}
+		]},
+
 		{"type":"center", "data":[
                         {"type":"icon", "data":{
                                 "name": "GitHub",
@@ -65,24 +75,28 @@
 				"size": "huge"
 			}}
                 ]},
-		{"type":"text", "data":{"en": "I am <b>Alexandra Marx</b>. An undergraduate CS and Mathematics major at the University of Michigan in Ann Arbor.<br>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n", "zh": "我叫<b>Alexandra Marx （马心婕）</b>，密西根大学的电脑科学和数学专业本科生在安娜堡。\n"}},
+		
 		{"type": "img", "data": {
-                        "location" : "center",
-                        "file": "media/cat.jpeg",
+                        "location" : "right",
+                        "file": "media/sleepy.jpeg",
                         "width": 0.5,
-                        "en_hover": "My Professional Portrait (2025)",
-                        "zh_hover": "我的正式的肖像（2025）"
+                        "en_hover": "My less professional Portrait (2025)",
+                        "zh_hover": "我的少正式的肖像（2025）"
                 }},
-                	
-		{"type": "img", "data": {
-			"location" : "right",
-			"file": "media/sleepy.jpeg",
-			"width": 0.33,
-			"en_hover": "a sleepy kitty",
-			"zh_hover": "一只累的小猫"
+
+		{"type":"text", "data":{"en":
+			"<b>For everyone else</b>, this website exists to catalog my train of thought: the winding about the hills of computing, non-Euclidean plains of math, forests of academia, and the regular derailments and collateral damage after I loop-the-loop on circular logic. On my blog you can find posts of many kinds, including, but not limited to:"
 		}},
-		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}},	
-		{"type":"text", "data":{"en": "\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convalli    s. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class apten    t taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id     cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posue    re. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien     vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa ni    sl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos."}}, 
+		
+		{"type":"text", "data":{"en": 
+  			" - Mathematical proofs </br>- copy-paste-able code, </br>- 3D models and 3D paper art,</br>- historical deep dives into forgotten computing history, </br>- nerd-sniping (with paintballs and canons), </br>- and overly literal opinion pieces. "
+		}},
+
+		{"type":"center", "data":[
+		{"type":"text", "data":{"en": "<h2>>><a href=\"/blog/Home\">Go To My New Blog</a><<</h2>"}}
+		]},
+
+		
 		{"type":"footer", "id": "db62", "data":[
 			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
 		]}	
