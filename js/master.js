@@ -17,10 +17,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 		console.log(filePath);
                 res = await fetch(filePath);
 		if (!res.ok) {
-			console.log(filePath, "404");
 			sessionStorage.removeItem('spa_path');
 			window.history.replaceState(null, "", "/404");
-			console.log("PUSH");
 			window.history.pushState({ path: path }, "", "/404");
 			res = await fetch("pages/404.json");
 		}
@@ -65,10 +63,8 @@ async function updateRoutine(page) {
 	try {
 		res = await fetch(findPageFileName(path));
 		if (!res.ok) {
-			console.log("File does not exist");
 			sessionStorage.removeItem('spa_path');
 			window.history.replaceState(null, "", "/404");
-			console.log("PUSH");
 			window.history.pushState({ path: path }, "", "/404");
 			res = await fetch('page/404.json');
 		}
@@ -78,7 +74,6 @@ async function updateRoutine(page) {
 	
 	sessionStorage.removeItem('spa_path');
 	window.history.replaceState(null, "", path);
-	console.log("PUSH");
 	window.history.pushState({ path: path }, "", path);
 
 	try {
@@ -126,7 +121,7 @@ horizontalElements = 0
 function renderPage(container, data) {
 	document.addEventListener('click', (e) => {
 		const link = e.target.closest('a');
-		if (link && link.href && link.href.startsWith(window.location.origin)) {
+		if (link && link.href && link.href.startsWith(window.location.origin) && !((/\.[a-z0-9]{2,4}$/i).test(link.href))) {
 			e.preventDefault();
 			console.log(link.href);
 			let url = new URL(link.href);
