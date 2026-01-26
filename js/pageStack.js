@@ -75,6 +75,7 @@ async function addPageStack(container, data, name, isAnimated) {
 	for (let i = 0; i < list.length; i++) {
 		const hyperLink = document.createElement('a');
 		hyperLink.href = list[i]["page"];
+		hyperLink.className = "nav-link"
 		box.pgList.push(hyperLink);
 		box.appendChild(hyperLink);
 		const pg = document.createElement("special-div");
