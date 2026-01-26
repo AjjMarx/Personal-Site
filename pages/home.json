@@ -35,8 +35,8 @@
 		{"type": "line", "data":{"width": 100}},
 		{"type": "img", "data": {
                         "location" : "left",
-                        "file": "media/cat.jpeg",
-                        "width": 0.5,
+                        "file": "media/ProfessionalPortrait.jpg",
+                        "width": 0.3,
                         "en_hover": "My Professional Portrait (2025)",
                         "zh_hover": "我的正式的肖像（2025）"
                 }},
@@ -78,10 +78,10 @@
 		
 		{"type": "img", "data": {
                         "location" : "right",
-                        "file": "media/sleepy.jpeg",
+                        "file": "media/ButterScotch.jpeg",
                         "width": 0.5,
-                        "en_hover": "My less professional Portrait (2025)",
-                        "zh_hover": "我的少正式的肖像（2025）"
+                        "en_hover": "Butterscotch",
+                        "zh_hover": "奶油糖"
                 }},
 
 		{"type":"text", "data":{"en":
