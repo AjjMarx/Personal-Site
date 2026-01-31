@@ -1,0 +1,40 @@
+{
+        "meta": {
+                "en_title": "Resources",
+                "en_subtitle": "Aides for me and you",
+                "languages": ["en"],
+		"tags" : ["source"]
+        },
+
+	"content": [
+
+        {"type": "header", "data":[
+                {"type": "text", "data":{"all": "<a class='nav-link' href=\"/\"><h1 class=\"bold\"><center>Alexandra J. Marx</center></h1></a>"}},
+                {"type": "toggle", "data":{ 
+                        "location": "east",
+                        "type": "language",
+                        "dual": true,
+                        "options": [
+                                "<b>en</b>",
+                                "<zh>汉</zh>"
+                        ]
+                }}
+        ], "id": "a82f"},
+
+
+        {"type": "pageStack", "priority": 1, "data":{
+                "location": "left",
+                "en_title": "<h1>Resources</h1>",
+                "list": "pages/blog/resources/index.txt"
+        }, "id": "5a11"},
+
+        {"type": "body", "id": "72d8", "priority": 0, "data":[
+                {"type": "text", "data": {"all": "<center><h1>Resources</h1></center><span class=\n"}},         
+                {"type": "line", "data":{"width": 100}},
+		{"type":"text", "data":{"en": "Resources to help me and you in academics, computer science, mathematics, art, and so on..."}},
+		{"type":"footer", "id": "db62", "data":[
+			{"type": "text", "data": {"all": "<center><h3>Contact: ajjmarx@umich.edu</h3></center><span class=\n"}}
+		]}
+	]}
+        ]
+}

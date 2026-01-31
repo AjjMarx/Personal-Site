@@ -4,5 +4,5 @@
 -pages/blog/TechStack.json
 -pages/blog/Resume.json
 -pages/blog/Portfolio.json
--pages/blog/Reading.json
+-pages/blog/Resources.json
 
